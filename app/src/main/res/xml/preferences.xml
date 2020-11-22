@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/configuration">
+
+        <Preference
+            app:icon="@drawable/ic_outline_folder_24"
+            app:key="save_directory"
+            app:summary="@string/not_set"
+            app:title="@string/save_directory" />
+
+        <SwitchPreference
+            app:key="remove_url_params_enabled"
+            app:summary="@string/summary_remove_params_from_url"
+            app:title="@string/remove_params_from_url" />
+
+        <Preference
+            app:dependency="remove_url_params_enabled"
+            app:icon="@drawable/ic_outline_list_24"
+            app:key="remove_params"
+            app:summary="@string/summary_params_remove_list"
+            app:title="@string/params_remove_list" />
+
+        <SwitchPreference
+            app:isPreferenceVisible="false"
+            app:key="allow_internet"
+            app:summary="@string/summary_allow_internet"
+            app:title="@string/allow_internet" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/about">
+
+        <Preference
+            app:icon="@drawable/ic_outline_share_24"
+            app:key="about"
+            app:title="@string/app_name" />
+
+        <Preference
+            app:key="privacy_policy"
+            app:title="@string/privacy_policy" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:isPreferenceVisible="false"
+        app:key="debug"
+        app:title="@string/debugging">
+
+        <Preference
+            app:key="write_test_file"
+            app:summary="@string/debug_write_file_summary"
+            app:title="@string/debug_write_file" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

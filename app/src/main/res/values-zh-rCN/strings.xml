@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">ShareHelper</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="privacy_policy_content">本应用不会收集任何关于你和你的使用情况信息。</string>
+    <string name="configuration">配置</string>
+    <string name="save_directory">保存目录</string>
+    <string name="directory_not_set">未设置，点按设置以允许应用保存文件到内部存储</string>
+    <string name="remove_params_from_url">从 URL 中移除不想要的参数</string>
+    <string name="summary_remove_params_from_url">部分 URL 中可能含有用于追踪分享的参数，启用此选项并配置你想要移除的参数以在分享时移除它们</string>
+    <string name="params_remove_list">URL 参数移除列表</string>
+    <string name="summary_params_remove_list">配置分享 URL 时要移除的参数</string>
+    <string name="allow_internet">允许访问 Internet</string>
+    <string name="summary_allow_internet">当分享的 URL 的 Intent 中不含主题额外信息时从网页信息中获取标题</string>
+    <string name="add">添加</string>
+    <string name="params_remove_list_tip">点按操作栏中的添加按钮以添加，长按条目以删除</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="action_copy">复制</string>
+    <string name="action_share">分享</string>
+    <string name="action_save">保存</string>
+    <string name="unsupported_intent">当前 Intent 中包含的操作不被支持</string>
+    <string name="copied_text">已将 %s 复制到剪切板</string>
+    <string name="save_directory_not_set">保存目录未设置，请先设置以便保存文件</string>
+    <string name="no_write_permission">应用没有当前所设置的保存目录的写入权限。如果你从设置中撤销了访问权限，请重新设置</string>
+    <string name="create_file_failed">创建文件失败</string>
+    <string name="read_file_failed">读取文件失败</string>
+    <string name="open_output_file_failed">打开写出文件失败</string>
+    <string name="write_file_failed">写入文件时出现错误</string>
+    <string name="file_saved">文件已保存</string>
+    <string name="text_file_saved">文本文档已保存</string>
+    <string name="share_with">分享到…</string>
+
+    <string name="debugging">调试</string>
+    <string name="debug_write_file">写测试文件</string>
+    <string name="debug_write_file_summary">向保存目录写一个简单的文本文档</string>
+    <string name="debug_no_permission">无权限</string>
+    <string name="debug_save_directory_not_set">保存目录未设置</string>
+    <string name="debug_create_file_failed">创建文件失败</string>
+    <string name="debug_file_written">已写测试文件</string>
+</resources>

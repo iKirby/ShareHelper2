@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">ShareHelper</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy_content">This app does not collect any info about you and your usage.</string>
+    <string name="configuration">Configuration</string>
+    <string name="save_directory">Save directory</string>
+    <string name="directory_not_set">Not set, tap to set so that the app can save files to internal storage</string>
+    <string name="remove_params_from_url">Remove unwanted parameters from URL</string>
+    <string name="summary_remove_params_from_url">Some URLs may contain parameters used to track sharing, enable this and configure the ones you want to remove to remove them when sharing</string>
+    <string name="params_remove_list">URL parameters remove list</string>
+    <string name="summary_params_remove_list">Configure parameters to be removed when sharing URLs</string>
+    <string name="allow_internet">Allow internet access</string>
+    <string name="summary_allow_internet">Fetch title from web content if there is no subject extra in the intent when sharing URLs</string>
+    <string name="add">Add</string>
+    <string name="params_remove_list_tip">Tap the plus button on action bar to add, long click on an item to remove</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_share">Share</string>
+    <string name="action_save">Save</string>
+    <string name="unsupported_intent">The action in current intent is unsupported</string>
+    <string name="copied_text">Copied %s to clipboard</string>
+    <string name="save_directory_not_set">Save directory is not set, please set it first to save files</string>
+    <string name="no_write_permission">The app does not have write permission for selected save directory. If you have revoked the permission in settings, please set save directory again</string>
+    <string name="create_file_failed">Create file failed</string>
+    <string name="read_file_failed">Read file failed</string>
+    <string name="open_output_file_failed">Open output file failed</string>
+    <string name="write_file_failed">Error occurred while writing file</string>
+    <string name="file_saved">File saved</string>
+    <string name="text_file_saved">Text file saved</string>
+    <string name="share_with">Share with…</string>
+
+    <string name="debugging">Debugging</string>
+    <string name="debug_write_file">Write test file</string>
+    <string name="debug_write_file_summary">Write a simple text file to save directory</string>
+    <string name="debug_no_permission">No permission</string>
+    <string name="debug_save_directory_not_set">Save directory not set</string>
+    <string name="debug_create_file_failed">Create file failed</string>
+    <string name="debug_file_written">Test file written</string>
+</resources>
