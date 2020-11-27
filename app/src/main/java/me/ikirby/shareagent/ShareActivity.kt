@@ -86,6 +86,7 @@ class ShareActivity : AppCompatActivity() {
         } else {
             text
         }
+        viewModel.subject.value = subject
         viewModel.content.value = content
     }
 
@@ -205,7 +206,12 @@ class ShareActivity : AppCompatActivity() {
             }
             saveOtherFile(uri!!, file)
         } else {
-            val file = dir.createFile("text/plain", "Text_${Date().format()}.txt")
+            val fileName = if (viewModel.subject.value.isNullOrBlank()) {
+                "Text_${Date().format()}"
+            } else {
+                viewModel.subject.value!!.toFileName()
+            }
+            val file = dir.createFile("text/plain", "$fileName.txt")
             if (file == null) {
                 showToast(R.string.create_file_failed)
                 finish()

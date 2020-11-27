@@ -30,3 +30,7 @@ fun Date.format(): String {
     val sdf = SimpleDateFormat("yyyyMMddHHmmss", Locale.US)
     return sdf.format(this)
 }
+
+fun String.toFileName(): String {
+    return this.replace(Regex("\\W+"), "_")
+}
