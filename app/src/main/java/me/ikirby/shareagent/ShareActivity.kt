@@ -35,16 +35,24 @@ class ShareActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        if (intent.action == Intent.ACTION_SEND) {
-            if (intent.type == "text/plain") {
+        when(intent.action) {
+            Intent.ACTION_SEND -> {
+                if (intent.type == "text/plain") {
+                    viewModel.isText.value = true
+                    handleText(intent)
+                } else {
+                    viewModel.isFile.value = true
+                    handleFile(intent)
+                }
+            }
+            Intent.ACTION_PROCESS_TEXT -> {
                 viewModel.isText.value = true
                 handleText(intent)
-            } else {
-                viewModel.isFile.value = true
-                handleFile(intent)
             }
-        } else {
-            unsupported()
+            else -> {
+                unsupported()
+                return
+            }
         }
 
         binding.actionCopy.setOnClickListener {
@@ -77,6 +85,7 @@ class ShareActivity : AppCompatActivity() {
 
     private fun handleText(intent: Intent) {
         var text = intent.getStringExtra(Intent.EXTRA_TEXT)
+            ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
         if (text == null) {
             handleFile(intent)
             return
