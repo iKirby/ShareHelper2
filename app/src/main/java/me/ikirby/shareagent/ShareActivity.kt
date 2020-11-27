@@ -158,7 +158,13 @@ class ShareActivity : AppCompatActivity() {
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("ShareHelperCopy", text)
             clipboardManager.setPrimaryClip(clip)
-            showToast(getString(R.string.copied_text, text))
+
+            val toastText = if (text.length > 20) {
+                text.substring(0..20) + "…"
+            } else {
+                text
+            }
+            showToast(getString(R.string.copied_text, toastText))
         }
         finish()
     }
