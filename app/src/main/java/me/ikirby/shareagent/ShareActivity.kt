@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
+import me.ikirby.shareagent.widget.showSingleInputDialog
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -53,7 +54,11 @@ class ShareActivity : AppCompatActivity() {
             shareText()
         }
         binding.actionSave.setOnClickListener {
-            saveFile()
+            if (App.prefs.askForTextFileName && viewModel.isText.value == true) {
+                promptFileName()
+            } else {
+                saveFile()
+            }
         }
     }
 
@@ -106,6 +111,23 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
+    private fun getMimeType(uri: Uri): String? {
+        return if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
+            contentResolver.getType(uri)
+        } else {
+            val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase(Locale.ROOT))
+        }
+    }
+
+    private fun getTextFileName(): String {
+        return if (viewModel.subject.value.isNullOrBlank()) {
+            "Text_${Date().format()}"
+        } else {
+            viewModel.subject.value!!.toFileName()
+        }
+    }
+
     private fun removeParamsFromURL(urlWithParams: String): String {
         if (!urlWithParams.contains("?")) {
             return urlWithParams
@@ -142,15 +164,6 @@ class ShareActivity : AppCompatActivity() {
             }
         }
         return url
-    }
-
-    private fun getMimeType(uri: Uri): String? {
-        return if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
-            contentResolver.getType(uri)
-        } else {
-            val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
-            MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase(Locale.ROOT))
-        }
     }
 
     private fun copyText() {
@@ -206,12 +219,7 @@ class ShareActivity : AppCompatActivity() {
             }
             saveOtherFile(uri!!, file)
         } else {
-            val fileName = if (viewModel.subject.value.isNullOrBlank()) {
-                "Text_${Date().format()}"
-            } else {
-                viewModel.subject.value!!.toFileName()
-            }
-            val file = dir.createFile("text/plain", "$fileName.txt")
+            val file = dir.createFile("text/plain", "${getTextFileName()}.txt")
             if (file == null) {
                 showToast(R.string.create_file_failed)
                 finish()
@@ -263,6 +271,13 @@ class ShareActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun promptFileName() {
+        showSingleInputDialog(this, R.string.enter_file_name, {
+            viewModel.subject.value = it
+            saveFile()
+        }, getTextFileName())
     }
 
 }

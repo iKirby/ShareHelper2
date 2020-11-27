@@ -27,6 +27,11 @@
             app:summary="@string/summary_allow_internet"
             app:title="@string/allow_internet" />
 
+        <SwitchPreference
+            app:key="ask_text_file_name"
+            app:summary="@string/summary_ask_for_text_file_name"
+            app:title="@string/ask_for_text_file_name" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/about">

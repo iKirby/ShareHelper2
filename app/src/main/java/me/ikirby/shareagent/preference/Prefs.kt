@@ -14,6 +14,7 @@ class Prefs(context: Context) {
         const val PREF_REMOVE_URL_PARAMS_ENABLED = "remove_url_params_enabled"
         const val PREF_REMOVE_PARAMS = "remove_params"
         const val PREF_ALLOW_INTERNET = "allow_internet"
+        const val PREF_ASK_FOR_TEXT_FILE_NAME = "ask_text_file_name"
 
         const val PREF_CATEGORY_DEBUG = "debug"
         const val PREF_WRITE_TEST_FILE = "write_test_file"
@@ -56,5 +57,8 @@ class Prefs(context: Context) {
 
     val allowInternet: Boolean
         get() = preferences.getBoolean(PREF_ALLOW_INTERNET, false)
+
+    val askForTextFileName: Boolean
+        get() = preferences.getBoolean(PREF_ASK_FOR_TEXT_FILE_NAME, false)
 
 }

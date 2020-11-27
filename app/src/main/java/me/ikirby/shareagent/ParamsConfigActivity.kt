@@ -1,18 +1,16 @@
 package me.ikirby.shareagent
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.ikirby.shareagent.adapter.OnItemClickListener
 import me.ikirby.shareagent.adapter.ParamsListAdapter
 import me.ikirby.shareagent.databinding.ActivityParamsConfigBinding
+import me.ikirby.shareagent.widget.showSingleInputDialog
 
-class ParamsConfigActivity: AppCompatActivity() {
+class ParamsConfigActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityParamsConfigBinding
     private lateinit var adapter: ParamsListAdapter
@@ -60,26 +58,10 @@ class ParamsConfigActivity: AppCompatActivity() {
     }
 
     private fun showAddDialog() {
-        val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.add)
-            .setView(R.layout.dialog_single_input)
-            .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.cancel, null)
-            .create()
-
-        dialog.setOnShowListener {
-            val btnOK = dialog.getButton(Dialog.BUTTON_POSITIVE)
-            val editText = dialog.findViewById<EditText>(R.id.editText)!!
-
-            btnOK.setOnClickListener {
-                val str = editText.text.toString()
-                if (str.isNotBlank()) {
-                    adapter.addItem(str.trim())
-                }
-                dialog.dismiss()
+        showSingleInputDialog(this, R.string.add, {
+            if (it.isNotEmpty()) {
+                adapter.addItem(it)
             }
-        }
-
-        dialog.show()
+        })
     }
 }

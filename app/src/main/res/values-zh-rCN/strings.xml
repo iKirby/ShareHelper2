@@ -31,6 +31,9 @@
     <string name="file_saved">文件已保存</string>
     <string name="text_file_saved">文本文档已保存</string>
     <string name="share_with">分享到…</string>
+    <string name="ask_for_text_file_name">询问文本文档的文件名</string>
+    <string name="summary_ask_for_text_file_name">保存文本时提示用户输入文本文档的文件名</string>
+    <string name="enter_file_name">输入文件名</string>
 
     <string name="debugging">调试</string>
     <string name="debug_write_file">写测试文件</string>
