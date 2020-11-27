@@ -32,7 +32,7 @@
     <string name="text_file_saved">Text file saved</string>
     <string name="share_with">Share with…</string>
     <string name="ask_for_text_file_name">Ask for text file name</string>
-    <string name="summary_ask_for_text_file_name">Prompt user to enter a file name when saving text</string>
+    <string name="summary_ask_for_text_file_name">Prompt user to enter a file name when saving text, leave blank to use generated time-based name</string>
     <string name="enter_file_name">Enter file name</string>
 
     <string name="debugging">Debugging</string>
