@@ -10,12 +10,14 @@ class ParamsListAdapter : RecyclerView.Adapter<ParamsListAdapter.ParamsListViewH
     private val list = mutableListOf<String>()
     var onItemClickListener: OnItemClickListener? = null
 
-    class ParamsListViewHolder(binding: ItemParamsListBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ParamsListViewHolder(binding: ItemParamsListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val textView = binding.root
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParamsListViewHolder {
-        val binding = ItemParamsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemParamsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ParamsListViewHolder(binding)
     }
 

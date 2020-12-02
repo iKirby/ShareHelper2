@@ -61,7 +61,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             // debug preferences
             if (BuildConfig.DEBUG) {
-                val debugPreferenceCategory = findPreference<PreferenceCategory>(Prefs.PREF_CATEGORY_DEBUG)
+                val debugPreferenceCategory =
+                    findPreference<PreferenceCategory>(Prefs.PREF_CATEGORY_DEBUG)
                 debugPreferenceCategory?.isVisible = true
 
                 val writeTestFilePreference = findPreference<Preference>(Prefs.PREF_WRITE_TEST_FILE)
@@ -115,7 +116,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun writeTestFile() {
         val saveDirectoryUri = App.prefs.saveDirectory
         if (saveDirectoryUri == null) {
-            Toast.makeText(requireContext(), R.string.save_directory_not_set, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.save_directory_not_set, Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -126,19 +128,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
         if (!hasPermission) {
-            Toast.makeText(requireContext(), R.string.debug_no_permission, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.debug_no_permission, Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
         val dir = DocumentFile.fromTreeUri(requireContext(), saveDirectoryUri)
         if (dir == null) {
-            Toast.makeText(requireContext(), R.string.debug_no_permission, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.debug_no_permission, Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
         val file = dir.createFile("text/plain", "ShareHelperTestFile.txt")
         if (file == null) {
-            Toast.makeText(requireContext(), R.string.debug_no_permission, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.debug_no_permission, Toast.LENGTH_SHORT)
+                .show()
             return
         }
 

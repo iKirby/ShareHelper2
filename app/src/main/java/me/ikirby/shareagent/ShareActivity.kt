@@ -35,7 +35,7 @@ class ShareActivity : AppCompatActivity() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        when(intent.action) {
+        when (intent.action) {
             Intent.ACTION_SEND -> {
                 if (intent.type == "text/plain") {
                     viewModel.isText.value = true
@@ -220,7 +220,10 @@ class ShareActivity : AppCompatActivity() {
         viewModel.processing.value = true
         val dir = DocumentFile.fromTreeUri(this, saveDirectoryUri)!!
         if (uri != null) {
-            val file = dir.createFile(getMimeType(uri!!) ?: "application/octet-stream", viewModel.content.value!!)
+            val file = dir.createFile(
+                getMimeType(uri!!) ?: "application/octet-stream",
+                viewModel.content.value!!
+            )
             if (file == null) {
                 showToast(R.string.create_file_failed)
                 finish()
