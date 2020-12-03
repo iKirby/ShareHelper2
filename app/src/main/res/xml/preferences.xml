@@ -64,8 +64,8 @@
 
         <Preference
             app:key="append_to_test_file"
-            app:title="@string/debug_list_appendable"
-            app:summary="@string/debug_summary_list_appendable" />
+            app:title="@string/debug_test_append"
+            app:summary="@string/debug_summary_test_append" />
 
     </PreferenceCategory>
 

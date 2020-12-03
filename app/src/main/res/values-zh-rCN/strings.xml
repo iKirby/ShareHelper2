@@ -22,8 +22,8 @@
     <string name="action_save">保存</string>
     <string name="unsupported_intent">当前 Intent 中包含的操作不被支持</string>
     <string name="copied_text">已将 %s 复制到剪切板</string>
-    <string name="save_directory_not_set">保存目录未设置，请先设置以便保存文件</string>
-    <string name="no_write_permission">应用没有当前所设置的保存目录的写入权限。如果你从设置中撤销了访问权限，请重新设置</string>
+    <string name="save_directory_not_set">保存目录未设置。请先设置以便保存文件</string>
+    <string name="error_opening_directory">打开保存目录失败。请尝试重新设置目录</string>
     <string name="create_file_failed">创建文件失败</string>
     <string name="read_file_failed">读取文件失败</string>
     <string name="open_output_file_failed">打开写出文件失败</string>

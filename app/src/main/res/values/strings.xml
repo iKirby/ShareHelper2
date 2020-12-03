@@ -22,8 +22,8 @@
     <string name="action_save">Save</string>
     <string name="unsupported_intent">The action in current intent is unsupported</string>
     <string name="copied_text">Copied %s to clipboard</string>
-    <string name="save_directory_not_set">Save directory is not set, please set it first to save files</string>
-    <string name="no_write_permission">The app does not have write permission for selected save directory. If you have revoked the permission in settings, please set save directory again</string>
+    <string name="save_directory_not_set">Save directory is not set. Please set it first to save files</string>
+    <string name="error_opening_directory">Open save directory failed. Please try setting the directory again</string>
     <string name="create_file_failed">Create file failed</string>
     <string name="read_file_failed">Read file failed</string>
     <string name="open_output_file_failed">Open output file failed</string>

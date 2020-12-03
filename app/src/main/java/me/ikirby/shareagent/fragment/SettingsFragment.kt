@@ -3,8 +3,6 @@ package me.ikirby.shareagent.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
@@ -18,6 +16,10 @@ import me.ikirby.shareagent.BuildConfig
 import me.ikirby.shareagent.ParamsConfigActivity
 import me.ikirby.shareagent.R
 import me.ikirby.shareagent.contextual.Prefs
+import me.ikirby.shareagent.contextual.createFile
+import me.ikirby.shareagent.contextual.listTextFiles
+import me.ikirby.shareagent.contextual.openTextFileForAppend
+import me.ikirby.shareagent.util.Logger
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
@@ -25,8 +27,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
-
-        private const val DEBUG_TAG = "ShareHelperDebug"
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -76,7 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val listAppendableTextPreference =
                     findPreference<Preference>(Prefs.PREF_LIST_APPENDABLE_TEXT)
                 listAppendableTextPreference?.setOnPreferenceClickListener {
-                    listTextFiles()
+                    logTextFileList()
                     true
                 }
 
@@ -130,34 +130,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
             .show()
     }
 
-    // TODO reorganize debug code
     private fun writeTestFile() {
         val saveDirectoryUri = App.prefs.saveDirectory
         if (saveDirectoryUri == null) {
-            Log.d(DEBUG_TAG, "Save dir not set")
+            Logger.d("Save dir not set")
             return
         }
 
-        var hasPermission = false
-        requireContext().contentResolver.persistedUriPermissions.forEach {
-            if (it.uri == saveDirectoryUri && it.isWritePermission) {
-                hasPermission = true
-            }
-        }
-        if (!hasPermission) {
-            Log.d(DEBUG_TAG, "No write permission")
-            return
-        }
-
-        val dir = DocumentFile.fromTreeUri(requireContext(), saveDirectoryUri)
-        if (dir == null) {
-            Log.d(DEBUG_TAG, "Dir is null")
-            return
-        }
-
-        val file = dir.createFile("text/plain", "ShareHelperTestFile.txt")
+        val file = createFile(
+            requireContext(),
+            saveDirectoryUri,
+            "text/plain",
+            "ShareHelperTestFile.txt"
+        )
         if (file == null) {
-            Log.d(DEBUG_TAG, "Create file failed")
+            Logger.d("Create file failed")
             return
         }
 
@@ -167,82 +154,46 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     it.write("TEST_FILE".toByteArray(StandardCharsets.UTF_8))
                 }
             }
-            Log.d(DEBUG_TAG, "Test file written")
+            Logger.d("Test file written")
         }
     }
 
-    private fun listTextFiles() {
+    private fun logTextFileList() {
         val saveDirectoryUri = App.prefs.saveDirectory
         if (saveDirectoryUri == null) {
-            Log.d(DEBUG_TAG, "Save dir not set")
+            Logger.d("Save dir not set")
             return
         }
 
-        var hasPermission = false
-        requireContext().contentResolver.persistedUriPermissions.forEach {
-            if (it.uri == saveDirectoryUri && it.isReadPermission) {
-                hasPermission = true
-            }
-        }
-        if (!hasPermission) {
-            Log.d(DEBUG_TAG, "No read permission")
-            return
-        }
-
-        val dir = DocumentFile.fromTreeUri(requireContext(), saveDirectoryUri)
-        if (dir == null) {
-            Log.d(DEBUG_TAG, "dir is null")
-            return
-        }
-
-        dir.listFiles().forEachIndexed { index, documentFile ->
-            if (documentFile.isFile && documentFile.canWrite() && documentFile.type == "text/plain") {
-                Log.d(DEBUG_TAG, "File $index: ${documentFile.name ?: "Can not get name"}")
-            }
+        listTextFiles(requireContext(), saveDirectoryUri).forEach {
+            Logger.d(it)
         }
     }
 
     private fun testAppend() {
         val saveDirectoryUri = App.prefs.saveDirectory
         if (saveDirectoryUri == null) {
-            Log.d(DEBUG_TAG, "Save dir not set")
+            Logger.d("Save dir not set")
             return
         }
 
-        var hasPermission = false
-        requireContext().contentResolver.persistedUriPermissions.forEach {
-            if (it.uri == saveDirectoryUri && it.isWritePermission) {
-                hasPermission = true
-            }
-        }
-        if (!hasPermission) {
-            Log.d(DEBUG_TAG, "No write permission")
-            return
-        }
-
-        val dir = DocumentFile.fromTreeUri(requireContext(), saveDirectoryUri)
-        if (dir == null) {
-            Log.d(DEBUG_TAG, "Dir is null")
-            return
-        }
-
-        val file = dir.findFile("ShareHelperTestFile.txt")
+        val file = openTextFileForAppend(
+            requireContext(),
+            saveDirectoryUri,
+            "ShareHelperTestFile.txt"
+        )
         if (file == null) {
-            Log.d(DEBUG_TAG, "File not found")
+            Logger.d("Open text file for append failed")
             return
         }
 
-        if (file.canWrite()) {
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    requireContext().contentResolver.openOutputStream(file.uri, "wa")?.use {
-                        it.write("\nTEST_FILE".toByteArray(StandardCharsets.UTF_8))
-                    }
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                requireContext().contentResolver.openOutputStream(file.uri, "wa")?.use {
+                    it.write("\nTEST_FILE".toByteArray(StandardCharsets.UTF_8))
                 }
-                Log.d(DEBUG_TAG, "Appended to file")
             }
-        } else {
-            Log.d(DEBUG_TAG, "file cannot be written")
+            Logger.d("Appended to file")
         }
     }
 }
