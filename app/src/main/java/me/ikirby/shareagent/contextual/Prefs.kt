@@ -1,4 +1,4 @@
-package me.ikirby.shareagent.preference
+package me.ikirby.shareagent.contextual
 
 import android.content.Context
 import android.net.Uri

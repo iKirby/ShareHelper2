@@ -1,7 +1,7 @@
 package me.ikirby.shareagent
 
 import android.app.Application
-import me.ikirby.shareagent.preference.Prefs
+import me.ikirby.shareagent.contextual.Prefs
 
 class App : Application() {
 

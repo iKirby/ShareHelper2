@@ -2,10 +2,8 @@ package me.ikirby.shareagent.fragment
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
@@ -19,7 +17,7 @@ import me.ikirby.shareagent.App
 import me.ikirby.shareagent.BuildConfig
 import me.ikirby.shareagent.ParamsConfigActivity
 import me.ikirby.shareagent.R
-import me.ikirby.shareagent.preference.Prefs
+import me.ikirby.shareagent.contextual.Prefs
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
