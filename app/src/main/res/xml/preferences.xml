@@ -57,6 +57,16 @@
             app:summary="@string/debug_write_file_summary"
             app:title="@string/debug_write_file" />
 
+        <Preference
+            app:key="list_appendable_text"
+            app:title="@string/debug_list_appendable"
+            app:summary="@string/debug_summary_list_appendable" />
+
+        <Preference
+            app:key="append_to_test_file"
+            app:title="@string/debug_list_appendable"
+            app:summary="@string/debug_summary_list_appendable" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

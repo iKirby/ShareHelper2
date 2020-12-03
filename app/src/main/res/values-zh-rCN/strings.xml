@@ -34,12 +34,4 @@
     <string name="ask_for_text_file_name">询问文本文档的文件名</string>
     <string name="summary_ask_for_text_file_name">保存文本时提示用户输入文本文档的文件名，留空以使用按时间生成的文件名</string>
     <string name="enter_file_name">输入文件名</string>
-
-    <string name="debugging">调试</string>
-    <string name="debug_write_file">写测试文件</string>
-    <string name="debug_write_file_summary">向保存目录写一个简单的文本文档</string>
-    <string name="debug_no_permission">无权限</string>
-    <string name="debug_save_directory_not_set">保存目录未设置</string>
-    <string name="debug_create_file_failed">创建文件失败</string>
-    <string name="debug_file_written">已写测试文件</string>
 </resources>

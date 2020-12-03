@@ -35,11 +35,11 @@
     <string name="summary_ask_for_text_file_name">Prompt user to enter a file name when saving text, leave blank to use generated time-based name</string>
     <string name="enter_file_name">Enter file name</string>
 
-    <string name="debugging">Debugging</string>
-    <string name="debug_write_file">Write test file</string>
-    <string name="debug_write_file_summary">Write a simple text file to save directory</string>
-    <string name="debug_no_permission">No permission</string>
-    <string name="debug_save_directory_not_set">Save directory not set</string>
-    <string name="debug_create_file_failed">Create file failed</string>
-    <string name="debug_file_written">Test file written</string>
+    <string name="debugging" translatable="false">Debugging</string>
+    <string name="debug_write_file" translatable="false">Write test file</string>
+    <string name="debug_write_file_summary" translatable="false">Write a simple text file to save directory</string>
+    <string name="debug_list_appendable" translatable="false">List appendable text files</string>
+    <string name="debug_summary_list_appendable" translatable="false">Log files in notes collection to logcat</string>
+    <string name="debug_test_append" translatable="false">Append to test file</string>
+    <string name="debug_summary_test_append" translatable="false">Append test string to test file, must create test file first</string>
 </resources>
