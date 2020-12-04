@@ -17,10 +17,6 @@ class Prefs(context: Context) {
         const val PREF_ASK_FOR_TEXT_FILE_NAME = "ask_text_file_name"
         const val PREF_APPEND_SEPARATOR = "append_separator"
 
-        const val PREF_CATEGORY_DEBUG = "debug"
-        const val PREF_WRITE_TEST_FILE = "write_test_file"
-        const val PREF_LIST_APPENDABLE_TEXT = "list_appendable_text"
-        const val PREF_APPEND_TEST_FILE = "append_to_test_file"
         const val PREF_ERROR_LOG = "error_log"
         const val PREF_LAST_ERROR = "last_error"
     }
