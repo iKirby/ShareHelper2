@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.documentfile.provider.DocumentFile
@@ -221,8 +220,7 @@ class ShareActivity : AppCompatActivity() {
             }.onSuccess {
                 showToast(R.string.file_saved)
             }.onFailure {
-                val stackTraceString = Log.getStackTraceString(it)
-                Logger.e(stackTraceString)
+                Logger.e(it)
                 showToast(R.string.write_file_failed)
             }
             finish()
@@ -240,8 +238,7 @@ class ShareActivity : AppCompatActivity() {
             }.onSuccess {
                 showToast(R.string.text_file_saved)
             }.onFailure {
-                val stackTraceString = Log.getStackTraceString(it)
-                Logger.e(stackTraceString)
+                Logger.e(it)
                 showToast(R.string.write_file_failed)
             }
             finish()
@@ -292,8 +289,7 @@ class ShareActivity : AppCompatActivity() {
             }.onSuccess {
                 showToast(getString(R.string.content_appended, fileName))
             }.onFailure {
-                val stackTraceString = Log.getStackTraceString(it)
-                Logger.e(stackTraceString)
+                Logger.e(it)
                 showToast(R.string.write_file_failed)
             }
             finish()

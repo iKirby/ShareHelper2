@@ -20,6 +20,8 @@ class Prefs(context: Context) {
         const val PREF_WRITE_TEST_FILE = "write_test_file"
         const val PREF_LIST_APPENDABLE_TEXT = "list_appendable_text"
         const val PREF_APPEND_TEST_FILE = "append_to_test_file"
+        const val PREF_ERROR_LOG = "error_log"
+        const val PREF_LAST_ERROR = "last_error"
     }
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -62,5 +64,11 @@ class Prefs(context: Context) {
 
     val askForTextFileName: Boolean
         get() = preferences.getBoolean(PREF_ASK_FOR_TEXT_FILE_NAME, false)
+
+    var lastError: String?
+        get() = preferences.getString(PREF_LAST_ERROR, null)
+        set(value) {
+            preferences.edit { putString(PREF_LAST_ERROR, value) }
+        }
 
 }

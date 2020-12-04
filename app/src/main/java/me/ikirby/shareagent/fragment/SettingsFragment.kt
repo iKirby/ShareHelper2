@@ -11,10 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.ikirby.shareagent.App
-import me.ikirby.shareagent.BuildConfig
-import me.ikirby.shareagent.ParamsConfigActivity
-import me.ikirby.shareagent.R
+import me.ikirby.shareagent.*
 import me.ikirby.shareagent.contextual.Prefs
 import me.ikirby.shareagent.contextual.createFile
 import me.ikirby.shareagent.contextual.listTextFiles
@@ -58,6 +55,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val privacyPolicyPreference = findPreference<Preference>(Prefs.PREF_PRIVACY_POLICY)
             privacyPolicyPreference?.setOnPreferenceClickListener {
                 showPrivacyPolicy()
+                true
+            }
+
+            val errorLogPreference = findPreference<Preference>(Prefs.PREF_ERROR_LOG)
+            errorLogPreference?.setOnPreferenceClickListener {
+                val intent = Intent(requireContext(), ErrorLogActivity::class.java)
+                startActivity(intent)
                 true
             }
 

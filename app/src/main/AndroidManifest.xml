@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".ParamsConfigActivity" />
+        <activity android:name=".ErrorLogActivity" />
 
         <activity
             android:name=".ShareActivity"

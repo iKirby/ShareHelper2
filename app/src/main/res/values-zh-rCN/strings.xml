@@ -36,4 +36,7 @@
     <string name="append_choose_dialog_title">附加到</string>
     <string name="open_selected_file_failed">打开选定的文件失败</string>
     <string name="content_appended">内容已经附加到 %s</string>
+    <string name="error_log">错误日志</string>
+    <string name="summary_error_log">查看上一次出现错误时的日志</string>
+    <string name="no_error">没有出现过错误</string>
 </resources>

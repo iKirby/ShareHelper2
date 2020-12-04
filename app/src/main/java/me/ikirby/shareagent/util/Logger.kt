@@ -1,6 +1,7 @@
 package me.ikirby.shareagent.util
 
 import android.util.Log
+import me.ikirby.shareagent.App
 import me.ikirby.shareagent.BuildConfig
 
 object Logger {
@@ -13,5 +14,11 @@ object Logger {
 
     fun e(msg: String) {
         Log.e(TAG, msg)
+    }
+
+    fun e(t: Throwable) {
+        val stackTraceString = Log.getStackTraceString(t)
+        App.prefs.lastError = stackTraceString
+        e(stackTraceString)
     }
 }

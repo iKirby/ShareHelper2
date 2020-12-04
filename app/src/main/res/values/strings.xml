@@ -36,6 +36,9 @@
     <string name="append_choose_dialog_title">Append to</string>
     <string name="open_selected_file_failed">Open selected file failed</string>
     <string name="content_appended">Content appended to %s</string>
+    <string name="error_log">Error log</string>
+    <string name="summary_error_log">View log of the last error</string>
+    <string name="no_error">No error</string>
 
     <string name="debugging" translatable="false">Debugging</string>
     <string name="debug_write_file" translatable="false">Write test file</string>

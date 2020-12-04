@@ -45,6 +45,11 @@
             app:key="privacy_policy"
             app:title="@string/privacy_policy" />
 
+        <Preference
+            app:key="error_log"
+            app:summary="@string/summary_error_log"
+            app:title="@string/error_log" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -59,13 +64,13 @@
 
         <Preference
             app:key="list_appendable_text"
-            app:title="@string/debug_list_appendable"
-            app:summary="@string/debug_summary_list_appendable" />
+            app:summary="@string/debug_summary_list_appendable"
+            app:title="@string/debug_list_appendable" />
 
         <Preference
             app:key="append_to_test_file"
-            app:title="@string/debug_test_append"
-            app:summary="@string/debug_summary_test_append" />
+            app:summary="@string/debug_summary_test_append"
+            app:title="@string/debug_test_append" />
 
     </PreferenceCategory>
 
