@@ -221,8 +221,9 @@ class ShareActivity : AppCompatActivity() {
                         contentResolver.openOutputStream(targetFile.uri)?.use { output ->
                             val buffer = ByteArray(1024)
                             while (true) {
-                                if (input.read(buffer) > 0) {
-                                    output.write(buffer)
+                                val length = input.read(buffer)
+                                if (length > 0) {
+                                    output.write(buffer, 0, length)
                                 } else {
                                     break
                                 }
