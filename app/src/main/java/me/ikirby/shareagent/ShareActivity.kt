@@ -82,7 +82,7 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun unsupported() {
-        App.showToast(R.string.unsupported_intent)
+        showToast(R.string.unsupported_intent)
         finish()
     }
 
@@ -155,7 +155,7 @@ class ShareActivity : AppCompatActivity() {
             } else {
                 text
             }
-            App.showToast(getString(R.string.copied_text, toastText))
+            showToast(getString(R.string.copied_text, toastText))
         }
         finish()
     }
@@ -173,7 +173,7 @@ class ShareActivity : AppCompatActivity() {
     private fun saveFile() {
         val saveDirectoryUri = App.prefs.saveDirectory
         if (saveDirectoryUri == null) {
-            App.showToast(R.string.save_directory_not_set)
+            showToast(R.string.save_directory_not_set)
             finish()
             return
         }
@@ -187,7 +187,7 @@ class ShareActivity : AppCompatActivity() {
                 viewModel.content.value!!
             )
             if (file == null) {
-                App.showToast(R.string.create_file_failed)
+                showToast(R.string.create_file_failed)
                 finish()
                 return
             }
@@ -200,7 +200,7 @@ class ShareActivity : AppCompatActivity() {
                 "${getTextFileName()}.txt"
             )
             if (file == null) {
-                App.showToast(R.string.create_file_failed)
+                showToast(R.string.create_file_failed)
                 finish()
                 return
             }
@@ -219,13 +219,12 @@ class ShareActivity : AppCompatActivity() {
                             error = false
                         } catch (e: Exception) {
                             Logger.e(Log.getStackTraceString(e))
-                            App.showToast(R.string.write_file_failed)
                         }
-                    } ?: App.showToast(R.string.open_output_file_failed)
-                } ?: App.showToast(R.string.read_file_failed)
+                    }
+                }
             }
             if (!error) {
-                App.showToast(R.string.file_saved)
+                showToast(R.string.file_saved)
             }
             finish()
         }
@@ -241,12 +240,11 @@ class ShareActivity : AppCompatActivity() {
                         error = false
                     } catch (e: Exception) {
                         Logger.e(Log.getStackTraceString(e))
-                        App.showToast(R.string.write_file_failed)
                     }
-                } ?: App.showToast(R.string.open_output_file_failed)
+                }
             }
             if (!error) {
-                App.showToast(R.string.text_file_saved)
+                showToast(R.string.text_file_saved)
             }
             finish()
         }
@@ -272,14 +270,14 @@ class ShareActivity : AppCompatActivity() {
     private fun appendToFile(fileName: String) {
         val saveDirectoryUri = App.prefs.saveDirectory
         if (saveDirectoryUri == null) {
-            App.showToast(R.string.save_directory_not_set)
+            showToast(R.string.save_directory_not_set)
             finish()
             return
         }
 
         val file = openTextFileForAppend(this, saveDirectoryUri, fileName)
         if (file == null) {
-            App.showToast(R.string.open_selected_file_failed)
+            showToast(R.string.open_selected_file_failed)
             showAppendSelectDialog()
             return
         }
@@ -295,12 +293,11 @@ class ShareActivity : AppCompatActivity() {
                         error = false
                     } catch (e: Exception) {
                         Logger.e(Log.getStackTraceString(e))
-                        App.showToast(R.string.write_file_failed)
                     }
-                } ?: App.showToast(R.string.open_output_file_failed)
+                }
             }
             if (!error) {
-                App.showToast(getString(R.string.content_appended, fileName))
+                showToast(getString(R.string.content_appended, fileName))
             }
             finish()
         }
