@@ -39,12 +39,4 @@
     <string name="error_log">Error log</string>
     <string name="summary_error_log">View log of the last error</string>
     <string name="no_error">No error</string>
-
-    <string name="debugging" translatable="false">Debugging</string>
-    <string name="debug_write_file" translatable="false">Write test file</string>
-    <string name="debug_write_file_summary" translatable="false">Write a simple text file to save directory</string>
-    <string name="debug_list_appendable" translatable="false">List appendable text files</string>
-    <string name="debug_summary_list_appendable" translatable="false">Log files in notes collection to logcat</string>
-    <string name="debug_test_append" translatable="false">Append to test file</string>
-    <string name="debug_summary_test_append" translatable="false">Append test string to test file, must create test file first</string>
 </resources>

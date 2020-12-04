@@ -3,20 +3,11 @@ package me.ikirby.shareagent.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.ikirby.shareagent.*
 import me.ikirby.shareagent.contextual.Prefs
-import me.ikirby.shareagent.contextual.createFile
-import me.ikirby.shareagent.contextual.listTextFiles
-import me.ikirby.shareagent.contextual.openTextFileForAppend
-import me.ikirby.shareagent.util.Logger
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
@@ -64,32 +55,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 startActivity(intent)
                 true
             }
-
-            // debug preferences
-            if (BuildConfig.DEBUG) {
-                val debugPreferenceCategory =
-                    findPreference<PreferenceCategory>(Prefs.PREF_CATEGORY_DEBUG)
-                debugPreferenceCategory?.isVisible = true
-
-                val writeTestFilePreference = findPreference<Preference>(Prefs.PREF_WRITE_TEST_FILE)
-                writeTestFilePreference?.setOnPreferenceClickListener {
-                    writeTestFile()
-                    true
-                }
-
-                val listAppendableTextPreference =
-                    findPreference<Preference>(Prefs.PREF_LIST_APPENDABLE_TEXT)
-                listAppendableTextPreference?.setOnPreferenceClickListener {
-                    logTextFileList()
-                    true
-                }
-
-                val testAppendPreference = findPreference<Preference>(Prefs.PREF_APPEND_TEST_FILE)
-                testAppendPreference?.setOnPreferenceClickListener {
-                    testAppend()
-                    true
-                }
-            }
         }
     }
 
@@ -132,72 +97,5 @@ class SettingsFragment : PreferenceFragmentCompat() {
             .setTitle(R.string.privacy_policy)
             .setMessage(R.string.privacy_policy_content)
             .show()
-    }
-
-    private fun writeTestFile() {
-        val saveDirectoryUri = App.prefs.saveDirectory
-        if (saveDirectoryUri == null) {
-            Logger.d("Save dir not set")
-            return
-        }
-
-        val file = createFile(
-            requireContext(),
-            saveDirectoryUri,
-            "text/plain",
-            "ShareHelperTestFile.txt"
-        )
-        if (file == null) {
-            Logger.d("Create file failed")
-            return
-        }
-
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                requireContext().contentResolver.openOutputStream(file.uri)?.use {
-                    it.write("TEST_FILE".toByteArray(StandardCharsets.UTF_8))
-                }
-            }
-            Logger.d("Test file written")
-        }
-    }
-
-    private fun logTextFileList() {
-        val saveDirectoryUri = App.prefs.saveDirectory
-        if (saveDirectoryUri == null) {
-            Logger.d("Save dir not set")
-            return
-        }
-
-        listTextFiles(requireContext(), saveDirectoryUri).forEach {
-            Logger.d(it)
-        }
-    }
-
-    private fun testAppend() {
-        val saveDirectoryUri = App.prefs.saveDirectory
-        if (saveDirectoryUri == null) {
-            Logger.d("Save dir not set")
-            return
-        }
-
-        val file = openTextFileForAppend(
-            requireContext(),
-            saveDirectoryUri,
-            "ShareHelperTestFile.txt"
-        )
-        if (file == null) {
-            Logger.d("Open text file for append failed")
-            return
-        }
-
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                requireContext().contentResolver.openOutputStream(file.uri, "wa")?.use {
-                    it.write("\nTEST_FILE".toByteArray(StandardCharsets.UTF_8))
-                }
-            }
-            Logger.d("Appended to file")
-        }
     }
 }

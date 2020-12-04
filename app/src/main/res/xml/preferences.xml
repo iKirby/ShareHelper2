@@ -52,26 +52,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        app:isPreferenceVisible="false"
-        app:key="debug"
-        app:title="@string/debugging">
-
-        <Preference
-            app:key="write_test_file"
-            app:summary="@string/debug_write_file_summary"
-            app:title="@string/debug_write_file" />
-
-        <Preference
-            app:key="list_appendable_text"
-            app:summary="@string/debug_summary_list_appendable"
-            app:title="@string/debug_list_appendable" />
-
-        <Preference
-            app:key="append_to_test_file"
-            app:summary="@string/debug_summary_test_append"
-            app:title="@string/debug_test_append" />
-
-    </PreferenceCategory>
-
 </PreferenceScreen>
