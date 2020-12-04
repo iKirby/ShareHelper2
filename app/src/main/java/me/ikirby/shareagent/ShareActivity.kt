@@ -210,21 +210,20 @@ class ShareActivity : AppCompatActivity() {
 
     private fun saveOtherFile(fromUri: Uri, targetFile: DocumentFile) {
         lifecycleScope.launch {
-            var error = true
-            withContext(Dispatchers.IO) {
-                contentResolver.openInputStream(fromUri)?.use { input ->
-                    contentResolver.openOutputStream(targetFile.uri)?.use { output ->
-                        try {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    contentResolver.openInputStream(fromUri)?.use { input ->
+                        contentResolver.openOutputStream(targetFile.uri)?.use { output ->
                             output.write(input.readBytes())
-                            error = false
-                        } catch (e: Exception) {
-                            Logger.e(Log.getStackTraceString(e))
                         }
                     }
                 }
-            }
-            if (!error) {
+            }.onSuccess {
                 showToast(R.string.file_saved)
+            }.onFailure {
+                val stackTraceString = Log.getStackTraceString(it)
+                Logger.e(stackTraceString)
+                showToast(R.string.write_file_failed)
             }
             finish()
         }
@@ -232,19 +231,18 @@ class ShareActivity : AppCompatActivity() {
 
     private fun saveTextFile(content: String, targetFile: DocumentFile) {
         lifecycleScope.launch {
-            var error = true
-            withContext(Dispatchers.IO) {
-                contentResolver.openOutputStream(targetFile.uri)?.use { output ->
-                    try {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    contentResolver.openOutputStream(targetFile.uri)?.use { output ->
                         output.write(content.toByteArray(StandardCharsets.UTF_8))
-                        error = false
-                    } catch (e: Exception) {
-                        Logger.e(Log.getStackTraceString(e))
                     }
                 }
-            }
-            if (!error) {
+            }.onSuccess {
                 showToast(R.string.text_file_saved)
+            }.onFailure {
+                val stackTraceString = Log.getStackTraceString(it)
+                Logger.e(stackTraceString)
+                showToast(R.string.write_file_failed)
             }
             finish()
         }
@@ -285,19 +283,18 @@ class ShareActivity : AppCompatActivity() {
         viewModel.processing.value = true
         val content = "\n\n=====\n\n${viewModel.content.value}"
         lifecycleScope.launch {
-            var error = true
-            withContext(Dispatchers.IO) {
-                contentResolver.openOutputStream(file.uri, "wa")?.use {
-                    try {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    contentResolver.openOutputStream(file.uri, "wa")?.use {
                         it.write(content.toByteArray(StandardCharsets.UTF_8))
-                        error = false
-                    } catch (e: Exception) {
-                        Logger.e(Log.getStackTraceString(e))
                     }
                 }
-            }
-            if (!error) {
+            }.onSuccess {
                 showToast(getString(R.string.content_appended, fileName))
+            }.onFailure {
+                val stackTraceString = Log.getStackTraceString(it)
+                Logger.e(stackTraceString)
+                showToast(R.string.write_file_failed)
             }
             finish()
         }

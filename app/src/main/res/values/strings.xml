@@ -26,8 +26,6 @@
     <string name="save_directory_not_set">Save directory is not set. Please set it first to save files</string>
     <string name="error_opening_directory">Open save directory failed. Please try setting the directory again</string>
     <string name="create_file_failed">Create file failed</string>
-    <string name="read_file_failed">Read file failed</string>
-    <string name="open_output_file_failed">Open output file failed</string>
     <string name="write_file_failed">Error occurred while writing file</string>
     <string name="file_saved">File saved</string>
     <string name="text_file_saved">Text file saved</string>

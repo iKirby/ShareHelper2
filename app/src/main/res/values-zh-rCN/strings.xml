@@ -26,8 +26,6 @@
     <string name="save_directory_not_set">保存目录未设置。请先设置以便保存文件</string>
     <string name="error_opening_directory">打开保存目录失败。请尝试重新设置目录</string>
     <string name="create_file_failed">创建文件失败</string>
-    <string name="read_file_failed">读取文件失败</string>
-    <string name="open_output_file_failed">打开写出文件失败</string>
     <string name="write_file_failed">写入文件时出现错误</string>
     <string name="file_saved">文件已保存</string>
     <string name="text_file_saved">文本文档已保存</string>
