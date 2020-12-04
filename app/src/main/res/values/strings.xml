@@ -20,6 +20,7 @@
     <string name="action_copy">Copy</string>
     <string name="action_share">Share</string>
     <string name="action_save">Save</string>
+    <string name="action_append">Append</string>
     <string name="unsupported_intent">The action in current intent is unsupported</string>
     <string name="copied_text">Copied %s to clipboard</string>
     <string name="save_directory_not_set">Save directory is not set. Please set it first to save files</string>
@@ -34,6 +35,9 @@
     <string name="ask_for_text_file_name">Ask for text file name</string>
     <string name="summary_ask_for_text_file_name">Prompt user to enter a file name when saving text, leave blank to use generated time-based name</string>
     <string name="enter_file_name">Enter file name</string>
+    <string name="append_choose_dialog_title">Append to</string>
+    <string name="open_selected_file_failed">Open selected file failed</string>
+    <string name="content_appended">Content appended to %s</string>
 
     <string name="debugging" translatable="false">Debugging</string>
     <string name="debug_write_file" translatable="false">Write test file</string>

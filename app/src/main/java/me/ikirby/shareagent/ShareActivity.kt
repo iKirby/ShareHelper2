@@ -7,8 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.documentfile.provider.DocumentFile
@@ -19,10 +17,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.ikirby.shareagent.contextual.createFile
 import me.ikirby.shareagent.contextual.getMimeType
+import me.ikirby.shareagent.contextual.listTextFiles
+import me.ikirby.shareagent.contextual.openTextFileForAppend
 import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
+import me.ikirby.shareagent.util.Logger
 import me.ikirby.shareagent.util.removeParamsFromURL
 import me.ikirby.shareagent.widget.showSingleInputDialog
+import me.ikirby.shareagent.widget.showSingleSelectDialog
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -33,6 +35,7 @@ class ShareActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShareBinding
 
     private var uri: Uri? = null
+    private val textFileList = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +76,9 @@ class ShareActivity : AppCompatActivity() {
                 saveFile()
             }
         }
+        binding.actionAppend.setOnClickListener {
+            showAppendSelectDialog()
+        }
     }
 
     private fun unsupported() {
@@ -99,6 +105,18 @@ class ShareActivity : AppCompatActivity() {
         }
         viewModel.subject.value = subject
         viewModel.content.value = content
+
+        App.prefs.saveDirectory?.let { uri ->
+            lifecycleScope.launch {
+                val list = withContext(Dispatchers.IO) {
+                    listTextFiles(this@ShareActivity, uri)
+                }
+                if (list.isNotEmpty()) {
+                    textFileList.addAll(list)
+                    viewModel.canAppend.value = true
+                }
+            }
+        }
     }
 
     private fun handleFile(intent: Intent) {
@@ -200,7 +218,7 @@ class ShareActivity : AppCompatActivity() {
                             output.write(input.readBytes())
                             error = false
                         } catch (e: Exception) {
-                            Log.d("WriteFile", Log.getStackTraceString(e))
+                            Logger.e(Log.getStackTraceString(e))
                             App.showToast(R.string.write_file_failed)
                         }
                     } ?: App.showToast(R.string.open_output_file_failed)
@@ -222,7 +240,7 @@ class ShareActivity : AppCompatActivity() {
                         output.write(content.toByteArray(StandardCharsets.UTF_8))
                         error = false
                     } catch (e: Exception) {
-                        Log.d("WriteFile", Log.getStackTraceString(e))
+                        Logger.e(Log.getStackTraceString(e))
                         App.showToast(R.string.write_file_failed)
                     }
                 } ?: App.showToast(R.string.open_output_file_failed)
@@ -239,6 +257,53 @@ class ShareActivity : AppCompatActivity() {
             viewModel.subject.value = it
             saveFile()
         }, getTextFileName())
+    }
+
+    private fun showAppendSelectDialog() {
+        showSingleSelectDialog(
+            this,
+            R.string.append_choose_dialog_title,
+            textFileList.toTypedArray()
+        ) {
+            appendToFile(textFileList[it])
+        }
+    }
+
+    private fun appendToFile(fileName: String) {
+        val saveDirectoryUri = App.prefs.saveDirectory
+        if (saveDirectoryUri == null) {
+            App.showToast(R.string.save_directory_not_set)
+            finish()
+            return
+        }
+
+        val file = openTextFileForAppend(this, saveDirectoryUri, fileName)
+        if (file == null) {
+            App.showToast(R.string.open_selected_file_failed)
+            showAppendSelectDialog()
+            return
+        }
+        // TODO make separator configurable
+        viewModel.processing.value = true
+        val content = "\n\n=====\n\n${viewModel.content.value}"
+        lifecycleScope.launch {
+            var error = true
+            withContext(Dispatchers.IO) {
+                contentResolver.openOutputStream(file.uri, "wa")?.use {
+                    try {
+                        it.write(content.toByteArray(StandardCharsets.UTF_8))
+                        error = false
+                    } catch (e: Exception) {
+                        Logger.e(Log.getStackTraceString(e))
+                        App.showToast(R.string.write_file_failed)
+                    }
+                } ?: App.showToast(R.string.open_output_file_failed)
+            }
+            if (!error) {
+                App.showToast(getString(R.string.content_appended, fileName))
+            }
+            finish()
+        }
     }
 
 }

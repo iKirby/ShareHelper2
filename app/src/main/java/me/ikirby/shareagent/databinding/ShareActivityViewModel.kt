@@ -8,6 +8,7 @@ class ShareActivityViewModel : ViewModel() {
 
     val isText = MutableLiveData(false)
     val isFile = MutableLiveData(false)
+    val canAppend = MutableLiveData(false)
 
     val subject = MutableLiveData("")
     val content = MutableLiveData("")

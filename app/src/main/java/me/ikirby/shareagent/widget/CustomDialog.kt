@@ -34,3 +34,18 @@ fun showSingleInputDialog(
 
     dialog.show()
 }
+
+fun showSingleSelectDialog(
+    activity: AppCompatActivity,
+    @StringRes titleResId: Int,
+    items: Array<String>,
+    callback: (Int) -> Unit
+) {
+    MaterialAlertDialogBuilder(activity)
+        .setTitle(titleResId)
+        .setNegativeButton(R.string.cancel, null)
+        .setItems(items) { _, index ->
+            callback(index)
+        }
+        .show()
+}

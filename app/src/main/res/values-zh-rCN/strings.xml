@@ -20,6 +20,7 @@
     <string name="action_copy">复制</string>
     <string name="action_share">分享</string>
     <string name="action_save">保存</string>
+    <string name="action_append">附加</string>
     <string name="unsupported_intent">当前 Intent 中包含的操作不被支持</string>
     <string name="copied_text">已将 %s 复制到剪切板</string>
     <string name="save_directory_not_set">保存目录未设置。请先设置以便保存文件</string>
@@ -34,4 +35,7 @@
     <string name="ask_for_text_file_name">询问文本文档的文件名</string>
     <string name="summary_ask_for_text_file_name">保存文本时提示用户输入文本文档的文件名，留空以使用按时间生成的文件名</string>
     <string name="enter_file_name">输入文件名</string>
+    <string name="append_choose_dialog_title">附加到</string>
+    <string name="open_selected_file_failed">打开选定的文件失败</string>
+    <string name="content_appended">内容已经附加到 %s</string>
 </resources>
