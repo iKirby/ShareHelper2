@@ -289,9 +289,9 @@ class ShareActivity : AppCompatActivity() {
             showAppendSelectDialog()
             return
         }
-        // TODO make separator configurable
+
         viewModel.processing.value = true
-        val content = "\n\n=====\n\n${viewModel.content.value}"
+        val content = "${App.prefs.appendSeparator}${viewModel.content.value}"
         lifecycleScope.launch {
             runCatching {
                 withContext(Dispatchers.IO) {

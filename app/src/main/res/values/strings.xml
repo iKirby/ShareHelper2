@@ -40,4 +40,6 @@
     <string name="summary_error_log">View log of the last error</string>
     <string name="no_error">No error</string>
     <string name="edit_content">Edit content</string>
+    <string name="append_separator">Append separator</string>
+    <string name="summary_append_separator">Separator to be inserted before appending content, default is 2 line breaks</string>
 </resources>

@@ -32,6 +32,11 @@
             app:summary="@string/summary_ask_for_text_file_name"
             app:title="@string/ask_for_text_file_name" />
 
+        <EditTextPreference
+            app:key="append_separator"
+            app:summary="@string/summary_append_separator"
+            app:title="@string/append_separator" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/about">

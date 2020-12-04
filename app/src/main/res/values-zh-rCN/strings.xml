@@ -40,4 +40,6 @@
     <string name="summary_error_log">查看上一次出现错误时的日志</string>
     <string name="no_error">没有出现过错误</string>
     <string name="edit_content">编辑内容</string>
+    <string name="append_separator">附加分隔符</string>
+    <string name="summary_append_separator">附加内容前添加的分隔符，默认是两个换行</string>
 </resources>

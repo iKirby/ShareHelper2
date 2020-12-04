@@ -15,6 +15,7 @@ class Prefs(context: Context) {
         const val PREF_REMOVE_PARAMS = "remove_params"
         const val PREF_ALLOW_INTERNET = "allow_internet"
         const val PREF_ASK_FOR_TEXT_FILE_NAME = "ask_text_file_name"
+        const val PREF_APPEND_SEPARATOR = "append_separator"
 
         const val PREF_CATEGORY_DEBUG = "debug"
         const val PREF_WRITE_TEST_FILE = "write_test_file"
@@ -69,6 +70,16 @@ class Prefs(context: Context) {
         get() = preferences.getString(PREF_LAST_ERROR, null)
         set(value) {
             preferences.edit { putString(PREF_LAST_ERROR, value) }
+        }
+
+    val appendSeparator: String
+        get() {
+            val value = preferences.getString(PREF_APPEND_SEPARATOR, null)
+            return if (value.isNullOrEmpty()) {
+                "\n\n"
+            } else {
+                value
+            }
         }
 
 }
