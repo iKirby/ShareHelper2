@@ -29,14 +29,16 @@
             app:show="@{!viewmodel.processing}">
 
             <TextView
+                android:id="@+id/content_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:ellipsize="end"
+                android:maxLines="3"
                 android:padding="16dp"
                 android:text="@{viewmodel.content}"
                 android:textColor="?android:textColorPrimary"
-                android:textSize="18sp"
-                android:maxLines="3"
-                android:ellipsize="end" />
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -76,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_append"
                 app:drawableStartCompat="@drawable/ic_outline_post_add_24"
-                app:show="@{viewmodel.canAppend}"/>
+                app:show="@{viewmodel.canAppend}" />
 
         </LinearLayout>
 

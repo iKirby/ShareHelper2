@@ -22,6 +22,7 @@ import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
 import me.ikirby.shareagent.util.Logger
 import me.ikirby.shareagent.util.removeParamsFromURL
+import me.ikirby.shareagent.widget.showMultilineInputDialog
 import me.ikirby.shareagent.widget.showSingleInputDialog
 import me.ikirby.shareagent.widget.showSingleSelectDialog
 import java.io.File
@@ -77,6 +78,11 @@ class ShareActivity : AppCompatActivity() {
         }
         binding.actionAppend.setOnClickListener {
             showAppendSelectDialog()
+        }
+        if (viewModel.isText.value == true) {
+            binding.contentView.setOnClickListener {
+                showEditDialog()
+            }
         }
     }
 
@@ -301,6 +307,14 @@ class ShareActivity : AppCompatActivity() {
             }
             finish()
         }
+    }
+
+    private fun showEditDialog() {
+        showMultilineInputDialog(this, R.string.edit_content, {
+            if (it.isNotBlank()) {
+                viewModel.content.value = it
+            }
+        }, viewModel.content.value ?: "")
     }
 
 }

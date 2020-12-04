@@ -35,6 +35,34 @@ fun showSingleInputDialog(
     dialog.show()
 }
 
+fun showMultilineInputDialog(
+    activity: AppCompatActivity,
+    @StringRes titleResId: Int,
+    callback: (String) -> Unit,
+    defaultValue: String = ""
+) {
+    val dialog = MaterialAlertDialogBuilder(activity)
+        .setTitle(titleResId)
+        .setView(R.layout.dialog_multi_line_input)
+        .setPositiveButton(R.string.ok, null)
+        .setNegativeButton(R.string.cancel, null)
+        .create()
+
+    dialog.setOnShowListener {
+        val btnOK = dialog.getButton(Dialog.BUTTON_POSITIVE)
+        val editText = dialog.findViewById<EditText>(R.id.editText)!!
+        editText.setText(defaultValue)
+
+        btnOK.setOnClickListener {
+            val str = editText.text.toString()
+            callback(str.trim())
+            dialog.dismiss()
+        }
+    }
+
+    dialog.show()
+}
+
 fun showSingleSelectDialog(
     activity: AppCompatActivity,
     @StringRes titleResId: Int,
