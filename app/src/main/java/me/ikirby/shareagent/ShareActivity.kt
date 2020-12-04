@@ -211,9 +211,16 @@ class ShareActivity : AppCompatActivity() {
         lifecycleScope.launch {
             runCatching {
                 withContext(Dispatchers.IO) {
-                    contentResolver.openInputStream(fromUri)?.use { input ->
+                    contentResolver.openInputStream(fromUri)?.buffered()?.use { input ->
                         contentResolver.openOutputStream(targetFile.uri)?.use { output ->
-                            output.write(input.readBytes())
+                            val buffer = ByteArray(1024)
+                            while (true) {
+                                if (input.read(buffer) > 0) {
+                                    output.write(buffer)
+                                } else {
+                                    break
+                                }
+                            }
                         }
                     }
                 }
