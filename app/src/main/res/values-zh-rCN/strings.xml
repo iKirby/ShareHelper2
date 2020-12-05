@@ -41,5 +41,5 @@
     <string name="no_error">没有出现过错误</string>
     <string name="edit_content">编辑内容</string>
     <string name="append_separator">附加分隔符</string>
-    <string name="summary_append_separator">附加内容前添加的分隔符，默认是两个换行</string>
+    <string name="summary_append_separator">附加内容前添加的分隔符，留空以使用默认（两个换行）</string>
 </resources>
