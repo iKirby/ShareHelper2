@@ -41,5 +41,5 @@
     <string name="no_error">No error</string>
     <string name="edit_content">Edit content</string>
     <string name="append_separator">Append separator</string>
-    <string name="summary_append_separator">Separator to be inserted before appending content, leave blank for the default (2 link breaks)</string>
+    <string name="summary_append_separator">Separator to be inserted before appending content, leave blank for the default (2 line breaks)</string>
 </resources>
