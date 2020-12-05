@@ -15,6 +15,8 @@
         <!-- Custom action bar style. -->
         <item name="actionBarStyle">@style/Theme.CustomActionBar</item>
         <item name="actionBarColor">@color/white</item>
+        <item name="dialogTheme">@style/Style.AlertDialog</item>
+        <item name="alertDialogTheme">@style/Style.AlertDialog</item>
     </style>
 
     <style name="Theme.CustomActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
@@ -43,4 +45,9 @@
         <item name="android:background">?selectableItemBackground</item>
         <item name="android:drawablePadding">16dp</item>
     </style>
+
+    <style name="Style.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="dialogCornerRadius">4dp</item>
+    </style>
+
 </resources>
