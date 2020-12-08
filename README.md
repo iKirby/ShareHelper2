@@ -6,4 +6,4 @@ A simple app that helps you when sharing content on Android.
 
 ## Privacy
 
-This app itself does not collect or upload any data.
+This app itself does not collect or upload any data. When you enable internet access, the app only uses it for fetching content from the URL, nothing will be collected.
