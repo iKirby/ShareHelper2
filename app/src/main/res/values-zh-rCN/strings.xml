@@ -42,4 +42,5 @@
     <string name="edit_content">编辑内容</string>
     <string name="append_separator">附加分隔符</string>
     <string name="summary_append_separator">附加内容前添加的分隔符，留空以使用默认（两个换行）</string>
+    <string name="error_fetching_title">获取标题时出现错误</string>
 </resources>

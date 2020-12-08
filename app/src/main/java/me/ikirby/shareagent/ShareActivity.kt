@@ -21,6 +21,7 @@ import me.ikirby.shareagent.contextual.openTextFileForAppend
 import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
 import me.ikirby.shareagent.util.Logger
+import me.ikirby.shareagent.util.getTitleFromHtml
 import me.ikirby.shareagent.util.removeParamsFromURL
 import me.ikirby.shareagent.widget.showMultilineInputDialog
 import me.ikirby.shareagent.widget.showSingleInputDialog
@@ -98,7 +99,9 @@ class ShareActivity : AppCompatActivity() {
             handleFile(intent)
             return
         }
-        if (text.isURL() && App.prefs.removeURLParamsEnabled) {
+
+        val isURL = text.isURL()
+        if (isURL && App.prefs.removeURLParamsEnabled) {
             text = removeParamsFromURL(text, App.prefs.removeParams)
         }
 
@@ -120,6 +123,25 @@ class ShareActivity : AppCompatActivity() {
                     textFileList.addAll(list)
                     viewModel.canAppend.value = true
                 }
+            }
+        }
+
+        if (App.prefs.allowInternet && isURL && subject.isBlank()) {
+            viewModel.processing.value = true
+            lifecycleScope.launch {
+                runCatching {
+                    withContext(Dispatchers.IO) {
+                        getTitleFromHtml(text)
+                    }
+                }.onSuccess {
+                    if (it.isNotBlank()) {
+                        viewModel.content.value = "$it\n$text"
+                    }
+                }.onFailure {
+                    Logger.e(it)
+                    showToast(R.string.error_fetching_title)
+                }
+                viewModel.processing.value = false
             }
         }
     }

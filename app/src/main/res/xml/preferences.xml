@@ -22,7 +22,6 @@
             app:title="@string/params_remove_list" />
 
         <SwitchPreference
-            app:isPreferenceVisible="false"
             app:key="allow_internet"
             app:summary="@string/summary_allow_internet"
             app:title="@string/allow_internet" />
