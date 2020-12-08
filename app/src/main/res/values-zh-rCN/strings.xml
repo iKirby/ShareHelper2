@@ -3,7 +3,7 @@
     <string name="settings">设置</string>
     <string name="about">关于</string>
     <string name="privacy_policy">隐私政策</string>
-    <string name="privacy_policy_content">本应用不会收集任何关于你和你的使用情况信息。</string>
+    <string name="privacy_policy_content">本应用不会收集任何关于你和你的使用情况信息。当启用网络访问时，应用只会利用它来获取 URL 相关内容，不会收集任何信息。</string>
     <string name="configuration">配置</string>
     <string name="save_directory">保存目录</string>
     <string name="directory_not_set">未设置，点按设置以允许应用保存文件到内部存储</string>

@@ -3,7 +3,7 @@
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="privacy_policy">Privacy policy</string>
-    <string name="privacy_policy_content">This app does not collect any info about you and your usage.</string>
+    <string name="privacy_policy_content">This app does not collect any info about you and your usage.\nWhen you enable internet access, the app only uses it for fetching content from the URL, nothing will be collected.</string>
     <string name="configuration">Configuration</string>
     <string name="save_directory">Save directory</string>
     <string name="directory_not_set">Not set, tap to set so that the app can save files to internal storage</string>
