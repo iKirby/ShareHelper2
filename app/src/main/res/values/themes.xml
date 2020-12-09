@@ -25,11 +25,9 @@
 
     <style name="Theme.ShareHelper2" parent="Theme.ShareHelper2.Base" />
 
-    <style name="Theme.ShareActivity" parent="Theme.MaterialComponents.DayNight.Dialog">
+    <style name="Theme.ShareActivity" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="android:backgroundDimAmount">0.32</item>
         <item name="windowNoTitle">true</item>
-        <item name="windowMinWidthMajor">65%</item>
-        <item name="windowMinWidthMinor">80%</item>
         <item name="dialogCornerRadius">8dp</item>
         <item name="colorPrimary">@color/theme_blue</item>
         <item name="colorPrimaryVariant">@color/theme_blue_variant</item>
