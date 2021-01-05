@@ -114,7 +114,7 @@ class ShareActivity : AppCompatActivity() {
         viewModel.subject.value = subject
         viewModel.content.value = content
 
-        App.prefs.saveDirectory?.let { uri ->
+        (App.prefs.textDirectory ?: App.prefs.saveDirectory)?.let { uri ->
             lifecycleScope.launch {
                 val list = withContext(Dispatchers.IO) {
                     listTextFiles(this@ShareActivity, uri)
@@ -198,15 +198,14 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun saveFile() {
-        val saveDirectoryUri = App.prefs.saveDirectory
-        if (saveDirectoryUri == null) {
-            showToast(R.string.save_directory_not_set)
-            finish()
-            return
-        }
-
         viewModel.processing.value = true
         if (uri != null) {
+            val saveDirectoryUri = App.prefs.saveDirectory
+            if (saveDirectoryUri == null) {
+                showToast(R.string.save_directory_not_set)
+                finish()
+                return
+            }
             val file = createFile(
                 this,
                 saveDirectoryUri,
@@ -220,6 +219,12 @@ class ShareActivity : AppCompatActivity() {
             }
             saveOtherFile(uri!!, file)
         } else {
+            val saveDirectoryUri = App.prefs.textDirectory ?: App.prefs.saveDirectory
+            if (saveDirectoryUri == null) {
+                showToast(R.string.save_directory_not_set)
+                finish()
+                return
+            }
             val file = createFile(
                 this,
                 saveDirectoryUri,

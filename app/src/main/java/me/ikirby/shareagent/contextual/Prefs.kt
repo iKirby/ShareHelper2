@@ -11,6 +11,7 @@ class Prefs(context: Context) {
         const val PREF_ABOUT = "about"
         const val PREF_PRIVACY_POLICY = "privacy_policy"
         const val PREF_SAVE_DIRECTORY = "save_directory"
+        const val PREF_TEXT_DIRECTORY = "text_directory"
         const val PREF_REMOVE_URL_PARAMS_ENABLED = "remove_url_params_enabled"
         const val PREF_REMOVE_PARAMS = "remove_params"
         const val PREF_ALLOW_INTERNET = "allow_internet"
@@ -37,6 +38,23 @@ class Prefs(context: Context) {
                 preferences.edit { putString(PREF_SAVE_DIRECTORY, value.toString()) }
             } else {
                 preferences.edit { remove(PREF_SAVE_DIRECTORY) }
+            }
+        }
+
+    var textDirectory: Uri?
+        get() {
+            val value = preferences.getString(PREF_TEXT_DIRECTORY, null)
+            return if (value != null) {
+                Uri.parse(value)
+            } else {
+                null
+            }
+        }
+        set(value) {
+            if (value != null) {
+                preferences.edit { putString(PREF_TEXT_DIRECTORY, value.toString()) }
+            } else {
+                preferences.edit { remove(PREF_TEXT_DIRECTORY) }
             }
         }
 

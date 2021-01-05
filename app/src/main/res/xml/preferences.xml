@@ -9,6 +9,12 @@
             app:summary="@string/directory_not_set"
             app:title="@string/save_directory" />
 
+        <Preference
+            app:icon="@drawable/ic_text_file_24"
+            app:key="text_directory"
+            app:summary="@string/summary_text_save_directory"
+            app:title="@string/text_save_directory" />
+
         <SwitchPreference
             app:key="remove_url_params_enabled"
             app:summary="@string/summary_remove_params_from_url"

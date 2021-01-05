@@ -15,6 +15,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
+        const val REQUEST_CHOOSE_TEXT_DIRECTORY = 2
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -32,7 +33,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 getString(R.string.directory_not_set)
             }
             saveDirectoryPreference?.setOnPreferenceClickListener {
-                chooseSaveDirectory()
+                chooseDirectory(REQUEST_CHOOSE_SAVE_DIRECTORY)
+                true
+            }
+
+            val textDirectoryPreference = findPreference<Preference>(Prefs.PREF_TEXT_DIRECTORY)
+            val textDirectoryValue = App.prefs.textDirectory
+            textDirectoryPreference?.summary = if (textDirectoryValue != null) {
+                URLDecoder.decode(textDirectoryValue.toString(), StandardCharsets.UTF_8.name())
+            } else {
+                getString(R.string.summary_text_save_directory)
+            }
+            textDirectoryPreference?.setOnPreferenceClickListener {
+                chooseDirectory(REQUEST_CHOOSE_TEXT_DIRECTORY)
                 true
             }
 
@@ -62,23 +75,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
         if (data == null) {
             return
         }
-
-        if (requestCode == REQUEST_CHOOSE_SAVE_DIRECTORY) {
-            onChooseSaveDirectoryResult(resultCode, data)
-        }
+        onChooseDirectoryResult(requestCode, resultCode, data)
     }
 
-    private fun chooseSaveDirectory() {
+    private fun chooseDirectory(requestCode: Int) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
         }
-        startActivityForResult(intent, REQUEST_CHOOSE_SAVE_DIRECTORY)
+        startActivityForResult(intent, requestCode)
     }
 
-    private fun onChooseSaveDirectoryResult(resultCode: Int, data: Intent) {
+    private fun onChooseDirectoryResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode != REQUEST_CHOOSE_SAVE_DIRECTORY && requestCode != REQUEST_CHOOSE_TEXT_DIRECTORY) {
+            return
+        }
+
         val uri = data.data
         if (resultCode != Activity.RESULT_OK || uri == null) {
             return
@@ -87,9 +101,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val flags = data.flags and
                 (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         requireContext().contentResolver.takePersistableUriPermission(uri, flags)
-        App.prefs.saveDirectory = uri
-        findPreference<Preference>(Prefs.PREF_SAVE_DIRECTORY)?.summary =
-            URLDecoder.decode(uri.toString(), StandardCharsets.UTF_8.name())
+
+        if (requestCode == REQUEST_CHOOSE_SAVE_DIRECTORY) {
+            App.prefs.saveDirectory = uri
+            findPreference<Preference>(Prefs.PREF_SAVE_DIRECTORY)?.summary =
+                URLDecoder.decode(uri.toString(), StandardCharsets.UTF_8.name())
+        } else if (requestCode == REQUEST_CHOOSE_TEXT_DIRECTORY) {
+            App.prefs.textDirectory = uri
+            findPreference<Preference>(Prefs.PREF_TEXT_DIRECTORY)?.summary =
+                URLDecoder.decode(uri.toString(), StandardCharsets.UTF_8.name())
+        }
     }
 
     private fun showPrivacyPolicy() {

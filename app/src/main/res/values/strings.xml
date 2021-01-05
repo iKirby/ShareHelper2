@@ -43,4 +43,6 @@
     <string name="append_separator">Append separator</string>
     <string name="summary_append_separator">Separator to be inserted before appending content, leave blank for the default (2 line breaks)</string>
     <string name="error_fetching_title">Error when fetching title</string>
+    <string name="text_save_directory">Text save directory</string>
+    <string name="summary_text_save_directory">Not set, set this to use a different directory for text files</string>
 </resources>
