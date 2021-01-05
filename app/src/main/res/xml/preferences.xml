@@ -6,7 +6,7 @@
         <Preference
             app:icon="@drawable/ic_outline_folder_24"
             app:key="save_directory"
-            app:summary="@string/not_set"
+            app:summary="@string/directory_not_set"
             app:title="@string/save_directory" />
 
         <SwitchPreference
