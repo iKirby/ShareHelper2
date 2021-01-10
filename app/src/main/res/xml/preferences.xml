@@ -64,6 +64,10 @@
             app:title="@string/privacy_policy" />
 
         <Preference
+            app:key="oss_components"
+            app:title="@string/open_source_components" />
+
+        <Preference
             app:key="error_log"
             app:summary="@string/summary_error_log"
             app:title="@string/error_log" />

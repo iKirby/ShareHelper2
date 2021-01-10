@@ -47,4 +47,5 @@
     <string name="summary_text_save_directory">Not set, set this to use a different directory for text files</string>
     <string name="text_processing_config">Text Processing</string>
     <string name="text_saving_config">Text Saving</string>
+    <string name="open_source_components">Open source components</string>
 </resources>

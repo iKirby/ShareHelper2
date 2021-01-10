@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import me.ikirby.osscomponent.OSSComponentsActivity
 import me.ikirby.shareagent.*
 import me.ikirby.shareagent.contextual.Prefs
 import java.net.URLDecoder
@@ -59,6 +60,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val privacyPolicyPreference = findPreference<Preference>(Prefs.PREF_PRIVACY_POLICY)
             privacyPolicyPreference?.setOnPreferenceClickListener {
                 showPrivacyPolicy()
+                true
+            }
+
+            val ossComponentsPreference = findPreference<Preference>(Prefs.OPEN_SOURCE_COMPONENTS)
+            ossComponentsPreference?.setOnPreferenceClickListener {
+                val intent = Intent(requireContext(), OSSComponentsActivity::class.java)
+                startActivity(intent)
                 true
             }
 

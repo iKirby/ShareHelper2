@@ -37,6 +37,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="me.ikirby.osscomponent.OSSComponentsActivity" />
+
     </application>
 
 </manifest>

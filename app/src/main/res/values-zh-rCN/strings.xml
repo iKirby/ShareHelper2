@@ -47,4 +47,5 @@
     <string name="summary_text_save_directory">未设置，设置以使用不同的目录保存文本文件</string>
     <string name="text_processing_config">文本处理</string>
     <string name="text_saving_config">文本保存</string>
+    <string name="open_source_components">开源组件</string>
 </resources>
