@@ -2,6 +2,7 @@ package me.ikirby.shareagent.fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -60,6 +61,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val privacyPolicyPreference = findPreference<Preference>(Prefs.PREF_PRIVACY_POLICY)
             privacyPolicyPreference?.setOnPreferenceClickListener {
                 showPrivacyPolicy()
+                true
+            }
+
+            val shareAppPreference = findPreference<Preference>(Prefs.SHARE_APP)
+            shareAppPreference?.setOnPreferenceClickListener {
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_SUBJECT, "ShareHelper")
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        "https://play.google.com/store/apps/details?id=me.ikirby.shareagent"
+                    )
+                    type = "text/plain"
+                }
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with)))
+                true
+            }
+
+            val sourceCodePreference = findPreference<Preference>(Prefs.SOURCE_CODE)
+            sourceCodePreference?.setOnPreferenceClickListener {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse("https://github.com/iKirby/ShareHelper2")
+                }
+                startActivity(intent)
                 true
             }
 

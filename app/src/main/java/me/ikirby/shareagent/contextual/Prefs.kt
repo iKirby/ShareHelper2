@@ -18,6 +18,8 @@ class Prefs(context: Context) {
         const val PREF_ASK_FOR_TEXT_FILE_NAME = "ask_text_file_name"
         const val PREF_APPEND_SEPARATOR = "append_separator"
 
+        const val SHARE_APP = "share_app"
+        const val SOURCE_CODE = "source_code"
         const val OPEN_SOURCE_COMPONENTS = "oss_components"
         const val PREF_ERROR_LOG = "error_log"
         const val PREF_LAST_ERROR = "last_error"

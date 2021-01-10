@@ -48,4 +48,8 @@
     <string name="text_processing_config">文本处理</string>
     <string name="text_saving_config">文本保存</string>
     <string name="open_source_components">开源组件</string>
+    <string name="share_app">分享此应用</string>
+    <string name="share_app_summary">和你的朋友分享此应用</string>
+    <string name="source_code">源代码</string>
+    <string name="source_code_summary">在 GitHub 上查看源代码</string>
 </resources>

@@ -48,4 +48,8 @@
     <string name="text_processing_config">Text Processing</string>
     <string name="text_saving_config">Text Saving</string>
     <string name="open_source_components">Open source components</string>
+    <string name="share_app">Share this app</string>
+    <string name="share_app_summary">Share this app with your friends</string>
+    <string name="source_code">Source code</string>
+    <string name="source_code_summary">View source code on GitHub</string>
 </resources>

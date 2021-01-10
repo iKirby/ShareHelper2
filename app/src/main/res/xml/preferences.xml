@@ -64,6 +64,16 @@
             app:title="@string/privacy_policy" />
 
         <Preference
+            app:key="share_app"
+            app:summary="@string/share_app_summary"
+            app:title="@string/share_app" />
+
+        <Preference
+            app:key="source_code"
+            app:summary="@string/source_code_summary"
+            app:title="@string/source_code" />
+
+        <Preference
             app:key="oss_components"
             app:title="@string/open_source_components" />
 
