@@ -4,7 +4,7 @@
     <string name="about">About</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="privacy_policy_content">This app does not collect any info about you and your usage.\nWhen you enable internet access, the app only uses it for fetching content from the URL, nothing will be collected.</string>
-    <string name="configuration">Configuration</string>
+    <string name="basic_config">Basic Configuration</string>
     <string name="save_directory">Save directory</string>
     <string name="directory_not_set">Not set, tap to set so that the app can save files to internal storage</string>
     <string name="remove_params_from_url">Remove unwanted parameters from URL</string>
@@ -41,8 +41,10 @@
     <string name="no_error">No error</string>
     <string name="edit_content">Edit content</string>
     <string name="append_separator">Append separator</string>
-    <string name="summary_append_separator">Separator to be inserted before appending content, leave blank for the default (2 line breaks)</string>
+    <string name="summary_append_separator">Separator to be added before appending or inserting content, leave blank for the default (2 line breaks)</string>
     <string name="error_fetching_title">Error when fetching title</string>
     <string name="text_save_directory">Text save directory</string>
     <string name="summary_text_save_directory">Not set, set this to use a different directory for text files</string>
+    <string name="text_processing_config">Text Processing</string>
+    <string name="text_saving_config">Text Saving</string>
 </resources>

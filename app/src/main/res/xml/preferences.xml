@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/configuration">
+    <PreferenceCategory app:title="@string/basic_config">
 
         <Preference
             app:icon="@drawable/ic_outline_folder_24"
@@ -14,6 +14,10 @@
             app:key="text_directory"
             app:summary="@string/summary_text_save_directory"
             app:title="@string/text_save_directory" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/text_processing_config">
 
         <SwitchPreference
             app:key="remove_url_params_enabled"
@@ -31,6 +35,10 @@
             app:key="allow_internet"
             app:summary="@string/summary_allow_internet"
             app:title="@string/allow_internet" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/text_saving_config">
 
         <SwitchPreference
             app:key="ask_text_file_name"
