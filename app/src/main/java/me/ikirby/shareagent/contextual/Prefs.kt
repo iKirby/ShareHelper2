@@ -17,6 +17,7 @@ class Prefs(context: Context) {
         const val PREF_ALLOW_INTERNET = "allow_internet"
         const val PREF_ASK_FOR_TEXT_FILE_NAME = "ask_text_file_name"
         const val PREF_APPEND_SEPARATOR = "append_separator"
+        const val PREF_ENABLE_BROWSER_ACTIVITY = "enable_browser_activity"
 
         const val SHARE_APP = "share_app"
         const val SOURCE_CODE = "source_code"

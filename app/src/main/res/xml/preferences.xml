@@ -52,6 +52,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/link_handling">
+
+        <SwitchPreference
+            app:key="enable_browser_activity"
+            app:summary="@string/summary_enable_browser_activity"
+            app:title="@string/enable_browser_activity" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/about">
 
         <Preference

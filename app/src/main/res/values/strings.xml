@@ -52,4 +52,7 @@
     <string name="share_app_summary">Share this app with your friends</string>
     <string name="source_code">Source code</string>
     <string name="source_code_summary">View source code on GitHub</string>
+    <string name="link_handling">Link Handling</string>
+    <string name="enable_browser_activity">Enable browser intent handling</string>
+    <string name="summary_enable_browser_activity">Add ShareHelper to system browser list for quick link handling</string>
 </resources>

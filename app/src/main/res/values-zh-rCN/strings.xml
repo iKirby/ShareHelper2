@@ -52,4 +52,7 @@
     <string name="share_app_summary">和你的朋友分享此应用</string>
     <string name="source_code">源代码</string>
     <string name="source_code_summary">在 GitHub 上查看源代码</string>
+    <string name="link_handling">链接处理</string>
+    <string name="enable_browser_activity">启用浏览器 Intent 处理</string>
+    <string name="summary_enable_browser_activity">将 ShareHelper 添加到系统浏览器列表以更快的处理链接</string>
 </resources>

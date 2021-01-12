@@ -1,11 +1,14 @@
 package me.ikirby.shareagent.fragment
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.ikirby.osscomponent.OSSComponentsActivity
 import me.ikirby.shareagent.*
@@ -55,6 +58,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             paramsRemoveListPreference?.setOnPreferenceClickListener {
                 val intent = Intent(requireContext(), ParamsConfigActivity::class.java)
                 startActivity(intent)
+                true
+            }
+
+            val enableBrowserPreference =
+                findPreference<SwitchPreference>(Prefs.PREF_ENABLE_BROWSER_ACTIVITY)
+            enableBrowserPreference?.isChecked = isBrowserActivityEnabled()
+            enableBrowserPreference?.setOnPreferenceChangeListener { _, newValue ->
+                setBrowserActivityEnabled(newValue == true)
                 true
             }
 
@@ -151,5 +162,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
             .setTitle(R.string.privacy_policy)
             .setMessage(R.string.privacy_policy_content)
             .show()
+    }
+
+    private fun isBrowserActivityEnabled(): Boolean {
+        val pm = requireContext().packageManager
+        val state = pm.getComponentEnabledSetting(
+            ComponentName(
+                requireContext(),
+                "me.ikirby.shareagent.BrowserBridgeActivity"
+            )
+        )
+        return state == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+    }
+
+    private fun setBrowserActivityEnabled(enabled: Boolean) {
+        val pm = requireContext().packageManager
+        val state = if (enabled) {
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        } else {
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        }
+        pm.setComponentEnabledSetting(
+            ComponentName(requireContext(), "me.ikirby.shareagent.BrowserBridgeActivity"),
+            state,
+            PackageManager.DONT_KILL_APP
+        )
     }
 }
