@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ShareHelper2.Base" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/theme_blue</item>
+        <item name="colorPrimaryVariant">@color/theme_blue_variant</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/theme_blue</item>
+        <item name="colorSecondaryVariant">@color/theme_blue_variant</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Custom action bar style. -->
+        <item name="actionBarStyle">@style/Theme.CustomActionBar</item>
+        <item name="actionBarColor">@color/white</item>
+        <item name="dialogTheme">@style/Style.AlertDialog</item>
+        <item name="alertDialogTheme">@style/Style.AlertDialog</item>
+    </style>
+</resources>
