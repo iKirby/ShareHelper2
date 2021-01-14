@@ -46,6 +46,15 @@
                 android:background="@color/separator" />
 
             <TextView
+                android:id="@+id/action_open_in_browser"
+                style="@style/Style.ShareMenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_open_in_browser"
+                app:drawableStartCompat="@drawable/ic_outline_open_in_new_24"
+                app:show="@{viewmodel.url != null}" />
+
+            <TextView
                 android:id="@+id/action_copy"
                 style="@style/Style.ShareMenuItem"
                 android:layout_width="match_parent"

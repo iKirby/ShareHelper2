@@ -12,4 +12,5 @@ class ShareActivityViewModel : ViewModel() {
 
     val subject = MutableLiveData("")
     val content = MutableLiveData("")
+    val url = MutableLiveData<String>(null)
 }

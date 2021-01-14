@@ -1,9 +1,6 @@
 package me.ikirby.shareagent
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -20,9 +17,11 @@ import me.ikirby.shareagent.contextual.listTextFiles
 import me.ikirby.shareagent.contextual.openTextFileForAppend
 import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
+import me.ikirby.shareagent.entity.AppItem
 import me.ikirby.shareagent.util.Logger
 import me.ikirby.shareagent.util.getTitleFromHtml
 import me.ikirby.shareagent.util.removeParamsFromURL
+import me.ikirby.shareagent.util.resolveBrowsers
 import me.ikirby.shareagent.widget.showMultilineInputDialog
 import me.ikirby.shareagent.widget.showSingleInputDialog
 import me.ikirby.shareagent.widget.showSingleSelectDialog
@@ -64,6 +63,9 @@ class ShareActivity : AppCompatActivity() {
             }
         }
 
+        binding.actionOpenInBrowser.setOnClickListener {
+            openInBrowserAction()
+        }
         binding.actionCopy.setOnClickListener {
             copyText()
         }
@@ -101,8 +103,11 @@ class ShareActivity : AppCompatActivity() {
         }
 
         val isURL = text.isURL()
-        if (isURL && App.prefs.removeURLParamsEnabled) {
-            text = removeParamsFromURL(text, App.prefs.removeParams)
+        if (isURL) {
+            viewModel.url.value = text
+            if (App.prefs.removeURLParamsEnabled) {
+                text = removeParamsFromURL(text, App.prefs.removeParams)
+            }
         }
 
         val subject = intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: ""
@@ -343,5 +348,35 @@ class ShareActivity : AppCompatActivity() {
             }
         }, viewModel.content.value ?: "")
     }
+
+    private fun openInBrowserAction() {
+        val defaultBrowser = App.prefs.defaultBrowser
+        val availableBrowsers = resolveBrowsers(this)
+        if (defaultBrowser != null) {
+            if (availableBrowsers.contains(defaultBrowser)) {
+                openInBrowser(defaultBrowser)
+            } else {
+                openInBrowser()
+            }
+        } else {
+            openInBrowser()
+        }
+        finish()
+    }
+
+    private fun openInBrowser(defaultBrowser: AppItem? = null) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(viewModel.url.value!!)
+            if (defaultBrowser != null) {
+                component = ComponentName(defaultBrowser.packageName, defaultBrowser.name)
+            }
+        }
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            showToast(R.string.no_available_browsers)
+        }
+    }
+
 
 }

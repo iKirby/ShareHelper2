@@ -59,4 +59,5 @@
     <string name="summary_default_browser">Set the default browser to use when opening link from ShareHelper</string>
     <string name="no_available_browsers">No browsers available, please install one first</string>
     <string name="clear_default">Clear default</string>
+    <string name="action_open_in_browser">Open in browser</string>
 </resources>

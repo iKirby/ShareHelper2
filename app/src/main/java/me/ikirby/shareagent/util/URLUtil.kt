@@ -1,11 +1,15 @@
 package me.ikirby.shareagent.util
 
+import android.app.Activity
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import me.ikirby.shareagent.R
 import me.ikirby.shareagent.entity.AppItem
+import me.ikirby.shareagent.showToast
 
 fun removeParamsFromURL(urlWithParams: String, paramsToRemove: List<String>): String {
     if (!urlWithParams.contains("?")) {
