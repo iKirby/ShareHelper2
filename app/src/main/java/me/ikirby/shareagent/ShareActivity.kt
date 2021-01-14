@@ -355,10 +355,10 @@ class ShareActivity : AppCompatActivity() {
         if (defaultBrowser != null) {
             if (availableBrowsers.contains(defaultBrowser)) {
                 openInBrowser(defaultBrowser)
-            } else {
+            } else if (availableBrowsers.isNotEmpty()) {
                 openInBrowser()
             }
-        } else {
+        } else if (availableBrowsers.isNotEmpty()) {
             openInBrowser()
         }
         finish()
