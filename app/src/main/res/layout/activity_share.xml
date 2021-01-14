@@ -21,75 +21,85 @@
             android:padding="16dp"
             app:show="@{viewmodel.processing}" />
 
-        <LinearLayout
-            android:id="@+id/layout_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:show="@{!viewmodel.processing}">
-
-            <TextView
-                android:id="@+id/content_view"
+            <LinearLayout
+                android:id="@+id/layout_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:padding="16dp"
-                android:text="@{viewmodel.content}"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="18sp" />
+                android:orientation="vertical"
+                app:show="@{!viewmodel.processing}">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/separator" />
+                <TextView
+                    android:id="@+id/content_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:padding="16dp"
+                    android:text="@{viewmodel.content}"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/action_open_in_browser"
-                style="@style/Style.ShareMenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_open_in_browser"
-                app:drawableStartCompat="@drawable/ic_outline_open_in_new_24"
-                app:show="@{viewmodel.url != null}" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/separator" />
 
-            <TextView
-                android:id="@+id/action_copy"
-                style="@style/Style.ShareMenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_copy"
-                app:drawableStartCompat="@drawable/ic_outline_copy_24"
-                app:show="@{viewmodel.isText}" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/action_share"
-                style="@style/Style.ShareMenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_share"
-                app:drawableStartCompat="@drawable/ic_outline_share_24"
-                app:show="@{viewmodel.isText}" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/action_save"
-                style="@style/Style.ShareMenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_save"
-                app:drawableStartCompat="@drawable/ic_outline_save_alt_24" />
+                        <TextView
+                            android:id="@+id/action_open_in_browser"
+                            style="@style/Style.ShareMenuItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_open_in_browser"
+                            app:drawableStartCompat="@drawable/ic_outline_open_in_new_24"
+                            app:show="@{viewmodel.url != null}" />
 
-            <TextView
-                android:id="@+id/action_append"
-                style="@style/Style.ShareMenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/action_append"
-                app:drawableStartCompat="@drawable/ic_outline_post_add_24"
-                app:show="@{viewmodel.canAppend}" />
+                        <TextView
+                            android:id="@+id/action_copy"
+                            style="@style/Style.ShareMenuItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_copy"
+                            app:drawableStartCompat="@drawable/ic_outline_copy_24"
+                            app:show="@{viewmodel.isText}" />
 
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/action_share"
+                            style="@style/Style.ShareMenuItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_share"
+                            app:drawableStartCompat="@drawable/ic_outline_share_24"
+                            app:show="@{viewmodel.isText}" />
 
+                        <TextView
+                            android:id="@+id/action_save"
+                            style="@style/Style.ShareMenuItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_save"
+                            app:drawableStartCompat="@drawable/ic_outline_save_alt_24" />
+
+                        <TextView
+                            android:id="@+id/action_append"
+                            style="@style/Style.ShareMenuItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_append"
+                            app:drawableStartCompat="@drawable/ic_outline_post_add_24"
+                            app:show="@{viewmodel.canAppend}" />
+
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
     </FrameLayout>
 </layout>
