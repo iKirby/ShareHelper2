@@ -55,4 +55,8 @@
     <string name="link_handling">链接处理</string>
     <string name="enable_browser_activity">启用浏览器 Intent 处理</string>
     <string name="summary_enable_browser_activity">将 ShareHelper 添加到系统浏览器列表以更快的处理链接</string>
+    <string name="default_browser">默认浏览器</string>
+    <string name="summary_default_browser">设置从 ShareHelper 打开链接时使用的默认浏览器</string>
+    <string name="no_available_browsers">没有可用的浏览器，请先安装一个</string>
+    <string name="clear_default">清除默认</string>
 </resources>

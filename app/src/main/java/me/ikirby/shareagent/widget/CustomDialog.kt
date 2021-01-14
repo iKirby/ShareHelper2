@@ -1,14 +1,14 @@
 package me.ikirby.shareagent.widget
 
+import android.app.Activity
 import android.app.Dialog
 import android.widget.EditText
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.ikirby.shareagent.R
 
 fun showSingleInputDialog(
-    activity: AppCompatActivity,
+    activity: Activity,
     @StringRes titleResId: Int,
     callback: (String) -> Unit,
     defaultValue: String = ""
@@ -36,7 +36,7 @@ fun showSingleInputDialog(
 }
 
 fun showMultilineInputDialog(
-    activity: AppCompatActivity,
+    activity: Activity,
     @StringRes titleResId: Int,
     callback: (String) -> Unit,
     defaultValue: String = ""
@@ -64,16 +64,24 @@ fun showMultilineInputDialog(
 }
 
 fun showSingleSelectDialog(
-    activity: AppCompatActivity,
+    activity: Activity,
     @StringRes titleResId: Int,
     items: Array<String>,
-    callback: (Int) -> Unit
+    callback: (Int) -> Unit,
+    @StringRes neutralBtnResId: Int? = null,
+    neutralCallback: (() -> Unit)? = null
 ) {
-    MaterialAlertDialogBuilder(activity)
+    val builder = MaterialAlertDialogBuilder(activity)
         .setTitle(titleResId)
         .setNegativeButton(R.string.cancel, null)
         .setItems(items) { _, index ->
             callback(index)
         }
-        .show()
+
+    if (neutralBtnResId != null && neutralCallback != null) {
+        builder.setNeutralButton(neutralBtnResId) { _, _ ->
+            neutralCallback()
+        }
+    }
+    builder.show()
 }

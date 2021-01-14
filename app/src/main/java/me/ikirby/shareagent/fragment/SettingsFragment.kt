@@ -13,6 +13,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.ikirby.osscomponent.OSSComponentsActivity
 import me.ikirby.shareagent.*
 import me.ikirby.shareagent.contextual.Prefs
+import me.ikirby.shareagent.util.resolveBrowsers
+import me.ikirby.shareagent.widget.showSingleSelectDialog
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
@@ -66,6 +68,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
             enableBrowserPreference?.isChecked = isBrowserActivityEnabled()
             enableBrowserPreference?.setOnPreferenceChangeListener { _, newValue ->
                 setBrowserActivityEnabled(newValue == true)
+                true
+            }
+
+            val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
+            App.prefs.defaultBrowser?.let {
+                defaultBrowserPreference?.summary = it.label
+            }
+            defaultBrowserPreference?.setOnPreferenceClickListener {
+                chooseBrowser()
                 true
             }
 
@@ -186,6 +197,35 @@ class SettingsFragment : PreferenceFragmentCompat() {
             ComponentName(requireContext(), "me.ikirby.shareagent.BrowserBridgeActivity"),
             state,
             PackageManager.DONT_KILL_APP
+        )
+    }
+
+    private fun chooseBrowser() {
+        val list = resolveBrowsers(requireContext())
+        if (list.isEmpty()) {
+            requireContext().showToast(R.string.no_available_browsers)
+            return
+        }
+        val labelList = mutableListOf<String>()
+        list.forEach {
+            labelList.add(it.label)
+        }
+        showSingleSelectDialog(
+            requireActivity(),
+            R.string.default_browser,
+            labelList.toTypedArray(),
+            {
+                val appItem = list[it]
+                App.prefs.defaultBrowser = appItem
+                val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
+                defaultBrowserPreference?.summary = appItem.label
+            },
+            R.string.clear_default,
+            {
+                App.prefs.defaultBrowser = null
+                val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
+                defaultBrowserPreference?.setSummary(R.string.summary_default_browser)
+            }
         )
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import me.ikirby.shareagent.entity.AppItem
 
 class Prefs(context: Context) {
 
@@ -18,6 +19,7 @@ class Prefs(context: Context) {
         const val PREF_ASK_FOR_TEXT_FILE_NAME = "ask_text_file_name"
         const val PREF_APPEND_SEPARATOR = "append_separator"
         const val PREF_ENABLE_BROWSER_ACTIVITY = "enable_browser_activity"
+        const val PREF_DEFAULT_BROWSER = "default_browser"
 
         const val SHARE_APP = "share_app"
         const val SOURCE_CODE = "source_code"
@@ -97,6 +99,19 @@ class Prefs(context: Context) {
                 "\n\n"
             } else {
                 value
+            }
+        }
+
+    var defaultBrowser: AppItem?
+        get() {
+            val value = preferences.getString(PREF_DEFAULT_BROWSER, null)
+            return AppItem.fromSaveString(value)
+        }
+        set(value) {
+            if (value == null) {
+                preferences.edit { remove(PREF_DEFAULT_BROWSER) }
+            } else {
+                preferences.edit { putString(PREF_DEFAULT_BROWSER, value.saveString()) }
             }
         }
 

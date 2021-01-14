@@ -55,4 +55,8 @@
     <string name="link_handling">Link Handling</string>
     <string name="enable_browser_activity">Enable browser intent handling</string>
     <string name="summary_enable_browser_activity">Add ShareHelper to system browser list for quick link handling</string>
+    <string name="default_browser">Default browser</string>
+    <string name="summary_default_browser">Set the default browser to use when opening link from ShareHelper</string>
+    <string name="no_available_browsers">No browsers available, please install one first</string>
+    <string name="clear_default">Clear default</string>
 </resources>

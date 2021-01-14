@@ -297,10 +297,9 @@ class ShareActivity : AppCompatActivity() {
         showSingleSelectDialog(
             this,
             R.string.append_choose_dialog_title,
-            textFileList.toTypedArray()
-        ) {
-            appendToFile(textFileList[it])
-        }
+            textFileList.toTypedArray(),
+            { appendToFile(textFileList[it]) }
+        )
     }
 
     private fun appendToFile(fileName: String) {

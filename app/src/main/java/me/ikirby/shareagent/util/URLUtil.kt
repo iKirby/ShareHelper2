@@ -1,5 +1,12 @@
 package me.ikirby.shareagent.util
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import me.ikirby.shareagent.entity.AppItem
+
 fun removeParamsFromURL(urlWithParams: String, paramsToRemove: List<String>): String {
     if (!urlWithParams.contains("?")) {
         return urlWithParams
@@ -34,4 +41,29 @@ fun removeParamsFromURL(urlWithParams: String, paramsToRemove: List<String>): St
         }
     }
     return url
+}
+
+fun resolveBrowsers(context: Context): List<AppItem> {
+    val pm = context.packageManager
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://"))
+
+    val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        PackageManager.MATCH_ALL
+    } else {
+        0
+    }
+    val resolution = pm.queryIntentActivities(intent, flag)
+    val list = mutableListOf<AppItem>()
+    resolution.forEach {
+        if (it.activityInfo.packageName != context.packageName) {
+            list.add(
+                AppItem(
+                    it.loadLabel(pm).toString(),
+                    it.activityInfo.packageName,
+                    it.activityInfo.name
+                )
+            )
+        }
+    }
+    return list
 }
