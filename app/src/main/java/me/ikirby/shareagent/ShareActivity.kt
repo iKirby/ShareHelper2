@@ -329,14 +329,14 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun appendToFile(fileName: String) {
-        val saveDirectoryUri = App.prefs.saveDirectory
-        if (saveDirectoryUri == null) {
+        val directoryUri = App.prefs.textDirectory ?: App.prefs.saveDirectory
+        if (directoryUri == null) {
             showToast(R.string.save_directory_not_set)
             finish()
             return
         }
 
-        val file = openTextFileForAppend(this, saveDirectoryUri, fileName)
+        val file = openTextFileForAppend(this, directoryUri, fileName)
         if (file == null) {
             showToast(R.string.open_selected_file_failed)
             showAppendSelectDialog()
