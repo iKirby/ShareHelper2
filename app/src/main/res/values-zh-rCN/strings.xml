@@ -60,4 +60,5 @@
     <string name="no_available_browsers">没有可用的浏览器，请先安装一个</string>
     <string name="clear_default">清除默认</string>
     <string name="action_open_in_browser">在浏览器中打开</string>
+    <string name="save_directory_unavailable_tip">保存目录尚未设置。请设置以使用存储相关的功能。</string>
 </resources>

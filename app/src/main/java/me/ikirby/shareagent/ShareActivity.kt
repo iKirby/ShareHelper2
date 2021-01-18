@@ -1,5 +1,6 @@
 package me.ikirby.shareagent
 
+import android.app.Activity
 import android.content.*
 import android.net.Uri
 import android.os.Bundle
@@ -11,10 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.ikirby.shareagent.contextual.createFile
-import me.ikirby.shareagent.contextual.getMimeType
-import me.ikirby.shareagent.contextual.listTextFiles
-import me.ikirby.shareagent.contextual.openTextFileForAppend
+import me.ikirby.shareagent.contextual.*
 import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
 import me.ikirby.shareagent.entity.AppItem
@@ -23,6 +21,7 @@ import me.ikirby.shareagent.util.getTitleFromHtml
 import me.ikirby.shareagent.util.removeParamsFromURL
 import me.ikirby.shareagent.util.resolveBrowsers
 import me.ikirby.shareagent.widget.showMultilineInputDialog
+import me.ikirby.shareagent.widget.showPromptDialog
 import me.ikirby.shareagent.widget.showSingleInputDialog
 import me.ikirby.shareagent.widget.showSingleSelectDialog
 import java.io.File
@@ -30,6 +29,10 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 
 class ShareActivity : AppCompatActivity() {
+
+    companion object {
+        private const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
+    }
 
     private val viewModel by lazy { ViewModelProvider(this).get(ShareActivityViewModel::class.java) }
     private lateinit var binding: ActivityShareBinding
@@ -73,8 +76,19 @@ class ShareActivity : AppCompatActivity() {
             shareText()
         }
         binding.actionSave.setOnClickListener {
-            if (App.prefs.askForTextFileName && viewModel.isText.value == true) {
-                promptFileName()
+            if (viewModel.isText.value == true) {
+                if ((App.prefs.saveDirectory ?: App.prefs.textDirectory) == null) {
+                    promptChooseDirectory()
+                    return@setOnClickListener
+                }
+                if (App.prefs.askForTextFileName) {
+                    promptFileName()
+                } else {
+                    saveFile()
+                }
+            } else if (App.prefs.saveDirectory == null) {
+                promptChooseDirectory()
+                return@setOnClickListener
             } else {
                 saveFile()
             }
@@ -87,6 +101,13 @@ class ShareActivity : AppCompatActivity() {
                 showEditDialog()
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (data != null) {
+            onChooseDirectoryResult(requestCode, resultCode, data)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun unsupported() {
@@ -378,5 +399,35 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
+    private fun promptChooseDirectory() {
+        showPromptDialog(this, R.string.save_directory, R.string.save_directory_unavailable_tip) {
+            chooseSaveDirectory()
+        }
+    }
+
+    private fun chooseSaveDirectory() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
+        }
+        startActivityForResult(intent, REQUEST_CHOOSE_SAVE_DIRECTORY)
+    }
+
+    private fun onChooseDirectoryResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode != REQUEST_CHOOSE_SAVE_DIRECTORY) {
+            return
+        }
+
+        val uri = data.data
+        if (resultCode != Activity.RESULT_OK || uri == null) {
+            return
+        }
+        val flags = data.flags and
+                (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        contentResolver.takePersistableUriPermission(uri, flags)
+        App.prefs.saveDirectory = uri
+    }
 
 }

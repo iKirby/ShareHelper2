@@ -60,4 +60,5 @@
     <string name="no_available_browsers">No browsers available, please install one first</string>
     <string name="clear_default">Clear default</string>
     <string name="action_open_in_browser">Open in browser</string>
+    <string name="save_directory_unavailable_tip">Save directory is not set. Please set it to use storage related features.</string>
 </resources>

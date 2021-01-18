@@ -85,3 +85,19 @@ fun showSingleSelectDialog(
     }
     builder.show()
 }
+
+fun showPromptDialog(
+    activity: Activity,
+    @StringRes titleResId: Int,
+    @StringRes contentResId: Int,
+    callback: () -> Unit
+) {
+    MaterialAlertDialogBuilder(activity)
+        .setTitle(titleResId)
+        .setMessage(contentResId)
+        .setPositiveButton(R.string.ok) { _, _ ->
+            callback()
+        }
+        .setNegativeButton(R.string.cancel, null)
+        .show()
+}

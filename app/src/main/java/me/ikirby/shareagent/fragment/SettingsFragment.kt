@@ -21,8 +21,8 @@ import java.nio.charset.StandardCharsets
 class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
-        const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
-        const val REQUEST_CHOOSE_TEXT_DIRECTORY = 2
+        private const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
+        private const val REQUEST_CHOOSE_TEXT_DIRECTORY = 2
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
