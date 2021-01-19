@@ -12,7 +12,7 @@
     <string name="params_remove_list">URL 参数移除列表</string>
     <string name="summary_params_remove_list">配置分享 URL 时要移除的参数</string>
     <string name="allow_internet">允许访问 Internet</string>
-    <string name="summary_allow_internet">当分享的 URL 的 Intent 中不含主题额外信息时从网页信息中获取标题</string>
+    <string name="summary_allow_internet">当分享的 URL 的 Intent 中不含主题额外信息时显示从网页信息中获取标题的按钮</string>
     <string name="add">添加</string>
     <string name="params_remove_list_tip">点按操作栏中的添加按钮以添加，长按条目以删除</string>
     <string name="ok">确定</string>
@@ -59,6 +59,9 @@
     <string name="summary_default_browser">设置从 ShareHelper 打开链接时使用的默认浏览器</string>
     <string name="no_available_browsers">没有可用的浏览器，请先安装一个</string>
     <string name="clear_default">清除默认</string>
-    <string name="action_open_in_browser">在浏览器中打开</string>
+    <string name="action_open_in_browser">打开浏览器</string>
     <string name="save_directory_unavailable_tip">保存目录尚未设置。请设置以使用存储相关的功能。</string>
+    <string name="action_fetch_title">获取标题</string>
+    <string name="fetch_title_automatically">自动获取标题</string>
+    <string name="summary_fetch_title_automatically">自动获取标题而无需点按按钮</string>
 </resources>

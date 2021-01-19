@@ -20,6 +20,7 @@ class Prefs(context: Context) {
         const val PREF_APPEND_SEPARATOR = "append_separator"
         const val PREF_ENABLE_BROWSER_ACTIVITY = "enable_browser_activity"
         const val PREF_DEFAULT_BROWSER = "default_browser"
+        const val PREF_FETCH_TITLE_AUTOMATICALLY = "fetch_title_automatically"
 
         const val SHARE_APP = "share_app"
         const val SOURCE_CODE = "source_code"
@@ -114,5 +115,8 @@ class Prefs(context: Context) {
                 preferences.edit { putString(PREF_DEFAULT_BROWSER, value.saveString()) }
             }
         }
+
+    val fetchTitleAutomatically: Boolean
+        get() = preferences.getBoolean(PREF_FETCH_TITLE_AUTOMATICALLY, false)
 
 }

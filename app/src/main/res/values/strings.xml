@@ -12,7 +12,7 @@
     <string name="params_remove_list">URL parameters remove list</string>
     <string name="summary_params_remove_list">Configure parameters to be removed when sharing URLs</string>
     <string name="allow_internet">Allow internet access</string>
-    <string name="summary_allow_internet">Fetch title from web content if there is no subject extra in the intent when sharing URLs</string>
+    <string name="summary_allow_internet">Show a button to fetch title from web content if there is no subject extra in the intent when sharing URLs</string>
     <string name="add">Add</string>
     <string name="params_remove_list_tip">Tap the plus button on action bar to add, long click on an item to remove</string>
     <string name="ok">OK</string>
@@ -59,6 +59,9 @@
     <string name="summary_default_browser">Set the default browser to use when opening link from ShareHelper</string>
     <string name="no_available_browsers">No browsers available, please install one first</string>
     <string name="clear_default">Clear default</string>
-    <string name="action_open_in_browser">Open in browser</string>
+    <string name="action_open_in_browser">Open browser</string>
     <string name="save_directory_unavailable_tip">Save directory is not set. Please set it to use storage related features.</string>
+    <string name="action_fetch_title">Fetch title</string>
+    <string name="fetch_title_automatically">Fetch title automatically</string>
+    <string name="summary_fetch_title_automatically">Fetch title automatically, without tapping the button</string>
 </resources>

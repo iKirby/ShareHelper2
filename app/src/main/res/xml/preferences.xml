@@ -36,6 +36,12 @@
             app:summary="@string/summary_allow_internet"
             app:title="@string/allow_internet" />
 
+        <CheckBoxPreference
+            app:dependency="allow_internet"
+            app:key="fetch_title_automatically"
+            app:summary="@string/summary_fetch_title_automatically"
+            app:title="@string/fetch_title_automatically" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/text_saving_config">

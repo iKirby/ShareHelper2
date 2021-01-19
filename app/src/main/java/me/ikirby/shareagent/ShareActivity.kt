@@ -69,6 +69,9 @@ class ShareActivity : AppCompatActivity() {
         binding.actionOpenInBrowser.setOnClickListener {
             openInBrowserAction()
         }
+        binding.actionFetchTitle.setOnClickListener {
+            fetchTitle()
+        }
         binding.actionCopy.setOnClickListener {
             copyText()
         }
@@ -153,21 +156,10 @@ class ShareActivity : AppCompatActivity() {
         }
 
         if (App.prefs.allowInternet && isURL && subject.isBlank()) {
-            viewModel.processing.value = true
-            lifecycleScope.launch {
-                runCatching {
-                    withContext(Dispatchers.IO) {
-                        getTitleFromHtml(text)
-                    }
-                }.onSuccess {
-                    if (it.isNotBlank()) {
-                        viewModel.content.value = "$it\n$text"
-                    }
-                }.onFailure {
-                    Logger.e(it)
-                    showToast(R.string.error_fetching_title)
-                }
-                viewModel.processing.value = false
+            if (App.prefs.fetchTitleAutomatically) {
+                fetchTitle()
+            } else {
+                viewModel.canFetchTitle.value = true
             }
         }
     }
@@ -396,6 +388,26 @@ class ShareActivity : AppCompatActivity() {
             startActivity(intent)
         } catch (e: Exception) {
             showToast(R.string.no_available_browsers)
+        }
+    }
+
+    private fun fetchTitle() {
+        viewModel.processing.value = true
+        lifecycleScope.launch {
+            runCatching {
+                withContext(Dispatchers.IO) {
+                    getTitleFromHtml(viewModel.url.value!!)
+                }
+            }.onSuccess {
+                if (it.isNotBlank()) {
+                    viewModel.content.value = "$it\n${viewModel.url.value}"
+                }
+                viewModel.canFetchTitle.value = false
+            }.onFailure {
+                Logger.e(it)
+                showToast(R.string.error_fetching_title)
+            }
+            viewModel.processing.value = false
         }
     }
 
