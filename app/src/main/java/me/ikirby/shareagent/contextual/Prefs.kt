@@ -21,6 +21,7 @@ class Prefs(context: Context) {
         const val PREF_ENABLE_BROWSER_ACTIVITY = "enable_browser_activity"
         const val PREF_DEFAULT_BROWSER = "default_browser"
         const val PREF_FETCH_TITLE_AUTOMATICALLY = "fetch_title_automatically"
+        const val PREF_FIRST_RUN = "first_run"
 
         const val SHARE_APP = "share_app"
         const val SOURCE_CODE = "source_code"
@@ -118,5 +119,11 @@ class Prefs(context: Context) {
 
     val fetchTitleAutomatically: Boolean
         get() = preferences.getBoolean(PREF_FETCH_TITLE_AUTOMATICALLY, false)
+
+    var firstRun: Boolean
+        get() = preferences.getBoolean(PREF_FIRST_RUN, true)
+        set(value) {
+            preferences.edit { putBoolean(PREF_FIRST_RUN, value) }
+        }
 
 }
