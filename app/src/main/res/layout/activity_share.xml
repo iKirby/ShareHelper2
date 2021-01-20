@@ -114,13 +114,13 @@
                         app:drawableStartCompat="@drawable/ic_outline_save_alt_24" />
 
                     <TextView
-                        android:id="@+id/action_append"
+                        android:id="@+id/action_add_to"
                         style="@style/Style.ShareMenuItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/action_append"
+                        android:text="@string/action_add_to"
                         app:drawableStartCompat="@drawable/ic_outline_post_add_24"
-                        app:show="@{viewmodel.canAppend}" />
+                        app:show="@{viewmodel.canAdd}" />
 
                 </LinearLayout>
             </ScrollView>

@@ -206,6 +206,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             requireContext().showToast(R.string.no_available_browsers)
             return
         }
+        val current = App.prefs.defaultBrowser
+        val checkedItem = if (current != null) {
+            list.indexOf(current)
+        } else {
+            -1
+        }
         val labelList = mutableListOf<String>()
         list.forEach {
             labelList.add(it.label)
@@ -214,14 +220,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             requireActivity(),
             R.string.default_browser,
             labelList.toTypedArray(),
+            checkedItem,
             {
                 val appItem = list[it]
                 App.prefs.defaultBrowser = appItem
                 val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
                 defaultBrowserPreference?.summary = appItem.label
             },
-            R.string.clear_default,
-            {
+            autoDismiss = true,
+            negativeBtnResId = R.string.cancel,
+            neutralBtnResId = R.string.clear_default,
+            neutralCallback = {
                 App.prefs.defaultBrowser = null
                 val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
                 defaultBrowserPreference?.setSummary(R.string.summary_default_browser)

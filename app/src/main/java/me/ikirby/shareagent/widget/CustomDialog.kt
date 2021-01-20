@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.widget.EditText
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.ikirby.shareagent.R
 
@@ -67,20 +68,43 @@ fun showSingleSelectDialog(
     activity: Activity,
     @StringRes titleResId: Int,
     items: Array<String>,
-    callback: (Int) -> Unit,
+    checkedItem: Int,
+    callback: ((Int) -> Unit)? = null,
+    autoDismiss: Boolean = false,
+    @StringRes positiveBtnResId: Int? = null,
+    positiveCallback: ((Int) -> Unit)? = null,
+    @StringRes negativeBtnResId: Int? = null,
+    negativeCallback: ((Int) -> Unit)? = null,
     @StringRes neutralBtnResId: Int? = null,
-    neutralCallback: (() -> Unit)? = null
+    neutralCallback: ((Int) -> Unit)? = null
 ) {
     val builder = MaterialAlertDialogBuilder(activity)
         .setTitle(titleResId)
-        .setNegativeButton(R.string.cancel, null)
-        .setItems(items) { _, index ->
-            callback(index)
+        .setSingleChoiceItems(items, checkedItem) { dialogInterface, index ->
+            callback?.invoke(index)
+            if (autoDismiss) {
+                dialogInterface.dismiss()
+            }
         }
 
-    if (neutralBtnResId != null && neutralCallback != null) {
-        builder.setNeutralButton(neutralBtnResId) { _, _ ->
-            neutralCallback()
+    if (positiveBtnResId != null) {
+        builder.setPositiveButton(positiveBtnResId) { dialogInterface, _ ->
+            val position = (dialogInterface as AlertDialog).listView.checkedItemPosition
+            positiveCallback?.invoke(position)
+        }
+    }
+
+    if (negativeBtnResId != null) {
+        builder.setNegativeButton(negativeBtnResId) { dialogInterface, _ ->
+            val position = (dialogInterface as AlertDialog).listView.checkedItemPosition
+            negativeCallback?.invoke(position)
+        }
+    }
+
+    if (neutralBtnResId != null) {
+        builder.setNeutralButton(neutralBtnResId) { dialogInterface, _ ->
+            val position = (dialogInterface as AlertDialog).listView.checkedItemPosition
+            neutralCallback?.invoke(position)
         }
     }
     builder.show()
