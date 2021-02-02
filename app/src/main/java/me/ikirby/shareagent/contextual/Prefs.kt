@@ -22,6 +22,7 @@ class Prefs(context: Context) {
         const val PREF_DEFAULT_BROWSER = "default_browser"
         const val PREF_FETCH_TITLE_AUTOMATICALLY = "fetch_title_automatically"
         const val PREF_FIRST_RUN = "first_run"
+        const val PREF_SHARE_OPTION = "share_option"
 
         const val SHARE_APP = "share_app"
         const val SOURCE_CODE = "source_code"
@@ -125,5 +126,8 @@ class Prefs(context: Context) {
         set(value) {
             preferences.edit { putBoolean(PREF_FIRST_RUN, value) }
         }
+
+    val shareOption: Int
+        get() = preferences.getString(PREF_SHARE_OPTION, "0")?.toInt() ?: 0
 
 }

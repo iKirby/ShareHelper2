@@ -66,4 +66,8 @@
     <string name="action_fetch_title">获取标题</string>
     <string name="fetch_title_automatically">自动获取标题</string>
     <string name="summary_fetch_title_automatically">自动获取标题而无需点按按钮</string>
+    <string name="share_option">分享偏好</string>
+    <string name="always_ask">总是询问</string>
+    <string name="merge_subject">合并主题和内容</string>
+    <string name="separate_subject">分开主题和内容</string>
 </resources>

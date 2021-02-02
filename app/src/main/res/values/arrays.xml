@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="share_option_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="share_option_item" translatable="false">
+        <item>@string/always_ask</item>
+        <item>@string/merge_subject</item>
+        <item>@string/separate_subject</item>
+    </string-array>
+</resources>

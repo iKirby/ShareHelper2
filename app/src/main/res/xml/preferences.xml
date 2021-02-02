@@ -42,6 +42,13 @@
             app:summary="@string/summary_fetch_title_automatically"
             app:title="@string/fetch_title_automatically" />
 
+        <ListPreference
+            app:entries="@array/share_option_item"
+            app:entryValues="@array/share_option_value"
+            app:key="share_option"
+            app:title="@string/share_option"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/text_saving_config">

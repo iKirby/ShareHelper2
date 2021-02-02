@@ -66,4 +66,8 @@
     <string name="action_fetch_title">Fetch title</string>
     <string name="fetch_title_automatically">Fetch title automatically</string>
     <string name="summary_fetch_title_automatically">Fetch title automatically, without tapping the button</string>
+    <string name="share_option">Share preference</string>
+    <string name="always_ask">Always ask</string>
+    <string name="merge_subject">Merge subject and content</string>
+    <string name="separate_subject">Separate subject and content</string>
 </resources>
