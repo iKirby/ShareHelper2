@@ -96,6 +96,11 @@
             app:title="@string/share_app" />
 
         <Preference
+            app:key="play_store"
+            app:summary="@string/summary_view_play_store"
+            app:title="@string/view_play_store" />
+
+        <Preference
             app:key="source_code"
             app:summary="@string/source_code_summary"
             app:title="@string/source_code" />

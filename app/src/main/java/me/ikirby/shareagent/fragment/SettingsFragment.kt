@@ -101,6 +101,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 true
             }
 
+            val playStorePreference = findPreference<Preference>(Prefs.PLAY_STORE)
+            playStorePreference?.setOnPreferenceClickListener {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data =
+                        Uri.parse("https://play.google.com/store/apps/details?id=me.ikirby.shareagent")
+                }
+                startActivity(intent)
+                true
+            }
+
             val sourceCodePreference = findPreference<Preference>(Prefs.SOURCE_CODE)
             sourceCodePreference?.setOnPreferenceClickListener {
                 val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -224,7 +234,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             {
                 val appItem = list[it]
                 App.prefs.defaultBrowser = appItem
-                val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
+                val defaultBrowserPreference =
+                    findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
                 defaultBrowserPreference?.summary = appItem.label
             },
             autoDismiss = true,
@@ -232,7 +243,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             neutralBtnResId = R.string.clear_default,
             neutralCallback = {
                 App.prefs.defaultBrowser = null
-                val defaultBrowserPreference = findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
+                val defaultBrowserPreference =
+                    findPreference<Preference>(Prefs.PREF_DEFAULT_BROWSER)
                 defaultBrowserPreference?.setSummary(R.string.summary_default_browser)
             }
         )

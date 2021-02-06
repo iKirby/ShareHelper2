@@ -25,6 +25,7 @@ class Prefs(context: Context) {
         const val PREF_SHARE_OPTION = "share_option"
 
         const val SHARE_APP = "share_app"
+        const val PLAY_STORE = "play_store"
         const val SOURCE_CODE = "source_code"
         const val OPEN_SOURCE_COMPONENTS = "oss_components"
         const val PREF_ERROR_LOG = "error_log"

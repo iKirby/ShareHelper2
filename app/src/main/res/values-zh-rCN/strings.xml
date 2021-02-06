@@ -70,4 +70,6 @@
     <string name="always_ask">总是询问</string>
     <string name="merge_subject">全部内容作为整体</string>
     <string name="separate_subject">分开主题（第一行）和内容</string>
+    <string name="view_play_store">在 Play 商店中查看</string>
+    <string name="summary_view_play_store">在 Play 商店中评分，评论或发送反馈</string>
 </resources>

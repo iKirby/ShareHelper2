@@ -70,4 +70,6 @@
     <string name="always_ask">Always ask</string>
     <string name="merge_subject">All content as a whole</string>
     <string name="separate_subject">Separate subject (first line) and content</string>
+    <string name="view_play_store">View on Play Store</string>
+    <string name="summary_view_play_store">Rate, comment or send feedback on Play Store</string>
 </resources>
