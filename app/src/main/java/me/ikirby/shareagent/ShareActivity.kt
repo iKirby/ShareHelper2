@@ -138,7 +138,7 @@ class ShareActivity : AppCompatActivity() {
         } else {
             text
         }
-        viewModel.subject.value = subject
+        viewModel.subject.value = if (subject == content) "" else subject
         viewModel.content.value = content
 
         (App.prefs.textDirectory ?: App.prefs.saveDirectory)?.let { uri ->
@@ -153,7 +153,7 @@ class ShareActivity : AppCompatActivity() {
             }
         }
 
-        if (App.prefs.allowInternet && isURL && subject.isBlank()) {
+        if (App.prefs.allowInternet && isURL && viewModel.subject.value.isNullOrBlank()) {
             if (App.prefs.fetchTitleAutomatically) {
                 fetchTitle()
             } else {
