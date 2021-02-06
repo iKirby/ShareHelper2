@@ -22,7 +22,7 @@
     <string name="action_save">Save</string>
     <string name="action_append">Append to end</string>
     <string name="action_insert">Insert at top</string>
-    <string name="action_add_to">Add to…</string>
+    <string name="action_add_to">Add to file…</string>
     <string name="unsupported_intent">The action in current intent is unsupported</string>
     <string name="copied_text">Copied %s to clipboard</string>
     <string name="save_directory_not_set">Save directory is not set. Please set it first to save files</string>
