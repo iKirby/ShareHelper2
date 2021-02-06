@@ -211,7 +211,7 @@ class ShareActivity : AppCompatActivity() {
                 this, R.string.share_option,
                 arrayOf(getString(R.string.merge_subject), getString(R.string.separate_subject))
             ) {
-                if (it == 1) {
+                if (it == 0) {
                     shareText(false)
                 } else {
                     shareText(true)
