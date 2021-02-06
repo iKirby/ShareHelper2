@@ -61,13 +61,13 @@
     <string name="summary_default_browser">设置从 ShareHelper 打开链接时使用的默认浏览器</string>
     <string name="no_available_browsers">没有可用的浏览器，请先安装一个</string>
     <string name="clear_default">清除默认</string>
-    <string name="action_open_in_browser">打开浏览器</string>
+    <string name="action_open_in_browser">在浏览器中打开</string>
     <string name="save_directory_unavailable_tip">保存目录尚未设置。请设置以使用存储相关的功能。</string>
     <string name="action_fetch_title">获取标题</string>
     <string name="fetch_title_automatically">自动获取标题</string>
     <string name="summary_fetch_title_automatically">自动获取标题而无需点按按钮</string>
-    <string name="share_option">分享偏好</string>
+    <string name="share_option">分享选项</string>
     <string name="always_ask">总是询问</string>
-    <string name="merge_subject">合并主题和内容</string>
-    <string name="separate_subject">分开主题和内容</string>
+    <string name="merge_subject">全部内容作为整体</string>
+    <string name="separate_subject">分开主题（第一行）和内容</string>
 </resources>

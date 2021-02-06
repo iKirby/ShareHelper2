@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.*
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.documentfile.provider.DocumentFile
@@ -20,10 +21,7 @@ import me.ikirby.shareagent.util.Logger
 import me.ikirby.shareagent.util.getTitleFromHtml
 import me.ikirby.shareagent.util.removeParamsFromURL
 import me.ikirby.shareagent.util.resolveBrowsers
-import me.ikirby.shareagent.widget.showMultilineInputDialog
-import me.ikirby.shareagent.widget.showPromptDialog
-import me.ikirby.shareagent.widget.showSingleInputDialog
-import me.ikirby.shareagent.widget.showSingleSelectDialog
+import me.ikirby.shareagent.widget.*
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -76,7 +74,7 @@ class ShareActivity : AppCompatActivity() {
             copyText()
         }
         binding.actionShare.setOnClickListener {
-            shareText()
+            shareTextMenu()
         }
         binding.actionSave.setOnClickListener {
             if (viewModel.isText.value == true) {
@@ -205,11 +203,33 @@ class ShareActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun shareText() {
+    private fun shareTextMenu() {
+        when (App.prefs.shareOption) {
+            1 -> shareText(false)
+            2 -> shareText(true)
+            else -> showSingleSelectDialog(
+                this, R.string.share_option,
+                arrayOf(getString(R.string.merge_subject), getString(R.string.separate_subject))
+            ) {
+                if (it == 1) {
+                    shareText(false)
+                } else {
+                    shareText(true)
+                }
+            }
+        }
+    }
+
+    private fun shareText(separate: Boolean) {
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, viewModel.content.value)
             type = "text/plain"
+            if (separate) {
+                putExtra(Intent.EXTRA_SUBJECT, viewModel.content.value!!.substringBefore("\n"))
+                putExtra(Intent.EXTRA_TEXT, viewModel.content.value!!.substringAfter("\n"))
+            } else {
+                putExtra(Intent.EXTRA_TEXT, viewModel.content.value)
+            }
         }
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with)))
         finish()
@@ -312,7 +332,7 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun showChooseFileDialog() {
-        showSingleSelectDialog(
+        showSingleChoiceDialog(
             this,
             R.string.append_choose_dialog_title,
             textFileList.toTypedArray(),

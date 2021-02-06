@@ -64,7 +64,7 @@ fun showMultilineInputDialog(
     dialog.show()
 }
 
-fun showSingleSelectDialog(
+fun showSingleChoiceDialog(
     activity: Activity,
     @StringRes titleResId: Int,
     items: Array<String>,
@@ -121,6 +121,21 @@ fun showPromptDialog(
         .setMessage(contentResId)
         .setPositiveButton(R.string.ok) { _, _ ->
             callback()
+        }
+        .setNegativeButton(R.string.cancel, null)
+        .show()
+}
+
+fun showSingleSelectDialog(
+    activity: Activity,
+    @StringRes titleResId: Int,
+    items: Array<String>,
+    selectCallback: (which: Int) -> Unit
+) {
+    MaterialAlertDialogBuilder(activity)
+        .setTitle(titleResId)
+        .setItems(items) { _, which ->
+            selectCallback(which)
         }
         .setNegativeButton(R.string.cancel, null)
         .show()

@@ -70,6 +70,7 @@
                             android:layout_marginStart="2dp"
                             android:layout_marginEnd="2dp"
                             android:layout_weight="1"
+                            android:letterSpacing="0"
                             android:maxLines="1"
                             android:text="@string/action_open_in_browser" />
 
@@ -81,6 +82,7 @@
                             android:layout_marginStart="2dp"
                             android:layout_marginEnd="2dp"
                             android:layout_weight="1"
+                            android:letterSpacing="0"
                             android:maxLines="1"
                             android:text="@string/action_fetch_title"
                             app:show="@{viewmodel.canFetchTitle}" />

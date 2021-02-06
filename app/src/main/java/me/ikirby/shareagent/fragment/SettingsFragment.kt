@@ -14,7 +14,7 @@ import me.ikirby.osscomponent.OSSComponentsActivity
 import me.ikirby.shareagent.*
 import me.ikirby.shareagent.contextual.Prefs
 import me.ikirby.shareagent.util.resolveBrowsers
-import me.ikirby.shareagent.widget.showSingleSelectDialog
+import me.ikirby.shareagent.widget.showSingleChoiceDialog
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 
@@ -216,7 +216,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         list.forEach {
             labelList.add(it.label)
         }
-        showSingleSelectDialog(
+        showSingleChoiceDialog(
             requireActivity(),
             R.string.default_browser,
             labelList.toTypedArray(),

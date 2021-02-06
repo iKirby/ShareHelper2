@@ -61,13 +61,13 @@
     <string name="summary_default_browser">Set the default browser to use when opening link from ShareHelper</string>
     <string name="no_available_browsers">No browsers available, please install one first</string>
     <string name="clear_default">Clear default</string>
-    <string name="action_open_in_browser">Open browser</string>
+    <string name="action_open_in_browser">Open in browser</string>
     <string name="save_directory_unavailable_tip">Save directory is not set. Please set it to use storage related features.</string>
     <string name="action_fetch_title">Fetch title</string>
     <string name="fetch_title_automatically">Fetch title automatically</string>
     <string name="summary_fetch_title_automatically">Fetch title automatically, without tapping the button</string>
-    <string name="share_option">Share preference</string>
+    <string name="share_option">Share option</string>
     <string name="always_ask">Always ask</string>
-    <string name="merge_subject">Merge subject and content</string>
-    <string name="separate_subject">Separate subject and content</string>
+    <string name="merge_subject">All content as a whole</string>
+    <string name="separate_subject">Separate subject (first line) and content</string>
 </resources>
