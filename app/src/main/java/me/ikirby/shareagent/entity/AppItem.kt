@@ -1,7 +1,5 @@
 package me.ikirby.shareagent.entity
 
-import me.ikirby.shareagent.contextual.Prefs
-
 data class AppItem(
     val label: String,
     val packageName: String,
