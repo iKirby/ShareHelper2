@@ -89,6 +89,6 @@ fun getMimeType(contentResolver: ContentResolver, uri: Uri): String? {
         contentResolver.getType(uri)
     } else {
         val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
-        MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase(Locale.ROOT))
+        MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.lowercase(Locale.ROOT))
     }
 }
