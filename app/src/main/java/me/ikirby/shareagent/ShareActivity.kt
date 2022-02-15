@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.*
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.documentfile.provider.DocumentFile
@@ -13,7 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.ikirby.shareagent.contextual.*
+import me.ikirby.shareagent.contextual.createFile
+import me.ikirby.shareagent.contextual.getMimeType
+import me.ikirby.shareagent.contextual.listTextFiles
+import me.ikirby.shareagent.contextual.openTextFileForAppend
 import me.ikirby.shareagent.databinding.ActivityShareBinding
 import me.ikirby.shareagent.databinding.ShareActivityViewModel
 import me.ikirby.shareagent.entity.AppItem
@@ -225,8 +227,17 @@ class ShareActivity : AppCompatActivity() {
             action = Intent.ACTION_SEND
             type = "text/plain"
             if (separate) {
-                putExtra(Intent.EXTRA_SUBJECT, viewModel.content.value!!.substringBefore("\n"))
-                putExtra(Intent.EXTRA_TEXT, viewModel.content.value!!.substringAfter("\n"))
+                val newlineIndex = viewModel.content.value!!.indexOf("\n")
+                if (newlineIndex != -1) {
+                    // has subject
+                    val subject = viewModel.content.value!!.substring(0, newlineIndex)
+                    val content = viewModel.content.value!!.substring(newlineIndex + 1)
+                    putExtra(Intent.EXTRA_SUBJECT, subject)
+                    putExtra(Intent.EXTRA_TEXT, content)
+                } else {
+                    // no subject
+                    putExtra(Intent.EXTRA_TEXT, viewModel.content.value)
+                }
             } else {
                 putExtra(Intent.EXTRA_TEXT, viewModel.content.value)
             }
