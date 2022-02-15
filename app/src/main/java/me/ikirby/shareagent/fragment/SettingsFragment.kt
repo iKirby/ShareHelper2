@@ -163,8 +163,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             return
         }
 
-        val flags = data.flags and
-                (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         requireContext().contentResolver.takePersistableUriPermission(uri, flags)
 
         if (requestCode == REQUEST_CHOOSE_SAVE_DIRECTORY) {

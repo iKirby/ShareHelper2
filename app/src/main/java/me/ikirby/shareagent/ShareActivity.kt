@@ -503,8 +503,7 @@ class ShareActivity : AppCompatActivity() {
         if (resultCode != Activity.RESULT_OK || uri == null) {
             return
         }
-        val flags = data.flags and
-                (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         contentResolver.takePersistableUriPermission(uri, flags)
         App.prefs.saveDirectory = uri
     }
