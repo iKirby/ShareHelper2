@@ -12,8 +12,8 @@ android {
         applicationId "me.ikirby.shareagent"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 29
-        versionName "2.5.1"
+        versionCode 30
+        versionName "2.5.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
