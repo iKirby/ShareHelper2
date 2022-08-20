@@ -3,6 +3,7 @@ package me.ikirby.shareagent
 import android.app.Activity
 import android.content.*
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -34,7 +35,7 @@ class ShareActivity : AppCompatActivity() {
         private const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
     }
 
-    private val viewModel by lazy { ViewModelProvider(this).get(ShareActivityViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(this)[ShareActivityViewModel::class.java] }
     private lateinit var binding: ActivityShareBinding
 
     private var uri: Uri? = null
@@ -242,7 +243,15 @@ class ShareActivity : AppCompatActivity() {
                 putExtra(Intent.EXTRA_TEXT, viewModel.content.value)
             }
         }
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with)))
+        val intent = Intent.createChooser(shareIntent, getString(R.string.share_with)).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                putExtra(
+                    Intent.EXTRA_EXCLUDE_COMPONENTS,
+                    arrayOf(ComponentName(applicationContext, ShareActivity::class.java))
+                )
+            }
+        }
+        startActivity(intent)
         finish()
     }
 
