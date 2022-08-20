@@ -33,7 +33,7 @@ class ParamsConfigActivity : AppCompatActivity() {
         App.prefs.removeParams.forEach(adapter::addItem)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.params_config, menu)
         return super.onCreateOptionsMenu(menu)
     }
