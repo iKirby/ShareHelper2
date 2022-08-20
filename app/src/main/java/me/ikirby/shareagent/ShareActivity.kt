@@ -121,7 +121,9 @@ class ShareActivity : AppCompatActivity() {
 
     private fun handleText(intent: Intent) {
         var text = intent.getStringExtra(Intent.EXTRA_TEXT)
-            ?: intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
+        if (text == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
+        }
         if (text == null) {
             handleFile(intent)
             return
