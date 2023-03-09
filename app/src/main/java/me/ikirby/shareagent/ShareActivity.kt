@@ -253,8 +253,15 @@ class ShareActivity : AppCompatActivity() {
                 )
             }
         }
+        viewModel.selectedAction.value = true
         startActivity(intent)
-        finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.selectedAction.value == true) {
+            finish()
+        }
     }
 
     private fun saveFile() {
