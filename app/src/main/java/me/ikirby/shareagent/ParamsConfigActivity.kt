@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import me.ikirby.shareagent.adapter.OnItemClickListener
 import me.ikirby.shareagent.adapter.ParamsListAdapter
@@ -31,6 +32,14 @@ class ParamsConfigActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         App.prefs.removeParams.forEach(adapter::addItem)
+
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                App.prefs.removeParams = adapter.getList()
+                finish()
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -41,7 +50,7 @@ class ParamsConfigActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             R.id.menu_add -> {
@@ -50,11 +59,6 @@ class ParamsConfigActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onBackPressed() {
-        App.prefs.removeParams = adapter.getList()
-        super.onBackPressed()
     }
 
     private fun showAddDialog() {

@@ -35,12 +35,12 @@ class ParamsListAdapter : RecyclerView.Adapter<ParamsListAdapter.ParamsListViewH
 
     fun addItem(str: String) {
         list.add(str)
-        notifyDataSetChanged()
+        notifyItemInserted(list.size - 1)
     }
 
     fun removeItem(position: Int) {
         list.removeAt(position)
-        notifyDataSetChanged()
+        notifyItemRemoved(position)
     }
 
     fun getList(): List<String> {

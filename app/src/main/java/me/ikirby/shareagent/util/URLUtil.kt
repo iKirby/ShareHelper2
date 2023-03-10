@@ -1,15 +1,11 @@
 package me.ikirby.shareagent.util
 
-import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import me.ikirby.shareagent.R
 import me.ikirby.shareagent.entity.AppItem
-import me.ikirby.shareagent.showToast
 
 fun removeParamsFromURL(urlWithParams: String, paramsToRemove: List<String>): String {
     if (!urlWithParams.contains("?")) {
@@ -56,7 +52,12 @@ fun resolveBrowsers(context: Context): List<AppItem> {
     } else {
         0
     }
-    val resolution = pm.queryIntentActivities(intent, flag)
+    val resolution = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        pm.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flag.toLong()))
+    } else {
+        @Suppress("DEPRECATION")
+        pm.queryIntentActivities(intent, flag)
+    }
     val list = mutableListOf<AppItem>()
     resolution.forEach {
         if (it.activityInfo.packageName != context.packageName) {

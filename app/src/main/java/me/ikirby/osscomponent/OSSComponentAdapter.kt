@@ -1,5 +1,6 @@
 package me.ikirby.osscomponent
 
+import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.util.TypedValue
 import android.view.ViewGroup
@@ -50,6 +51,7 @@ class OSSComponentAdapter(private val itemClickListener: OSSItemClickListener) :
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<OSSComponent>) {
         this.list = list
         notifyDataSetChanged()

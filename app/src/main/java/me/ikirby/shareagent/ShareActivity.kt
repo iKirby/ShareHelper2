@@ -5,6 +5,7 @@ import android.content.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.documentfile.provider.DocumentFile
@@ -31,15 +32,18 @@ import java.util.*
 
 class ShareActivity : AppCompatActivity() {
 
-    companion object {
-        private const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
-    }
-
     private val viewModel by lazy { ViewModelProvider(this)[ShareActivityViewModel::class.java] }
     private lateinit var binding: ActivityShareBinding
 
     private var uri: Uri? = null
     private val textFileList = mutableListOf<String>()
+
+    private val openChooseSaveDirectory =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            it.data?.let { intent ->
+                onChooseDirectoryResult(it.resultCode, intent)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,13 +111,6 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data != null) {
-            onChooseDirectoryResult(requestCode, resultCode, data)
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     private fun unsupported() {
         showToast(R.string.unsupported_intent)
         finish()
@@ -168,7 +165,12 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun handleFile(intent: Intent) {
-        val uri = intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM)
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM)
+        }
         if (uri != null) {
             val path = uri.path
             if (path == null) {
@@ -311,18 +313,22 @@ class ShareActivity : AppCompatActivity() {
         lifecycleScope.launch {
             runCatching {
                 withContext(Dispatchers.IO) {
-                    contentResolver.openInputStream(fromUri)?.buffered()?.use { input ->
-                        contentResolver.openOutputStream(targetFile.uri)?.use { output ->
-                            val buffer = ByteArray(1024)
-                            while (true) {
-                                val length = input.read(buffer)
-                                if (length > 0) {
-                                    output.write(buffer, 0, length)
-                                } else {
-                                    break
+                    val inputStream = contentResolver.openInputStream(fromUri)
+                    if (inputStream != null) {
+                        inputStream.buffered().use { input ->
+                            contentResolver.openOutputStream(targetFile.uri)?.use { output ->
+                                val buffer = ByteArray(1024)
+                                while (true) {
+                                    val length = input.read(buffer)
+                                    if (length > 0) {
+                                        output.write(buffer, 0, length)
+                                    } else {
+                                        break
+                                    }
                                 }
                             }
                         }
+                        inputStream.close()
                     }
                 }
             }.onSuccess {
@@ -520,14 +526,10 @@ class ShareActivity : AppCompatActivity() {
             addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
         }
-        startActivityForResult(intent, REQUEST_CHOOSE_SAVE_DIRECTORY)
+        openChooseSaveDirectory.launch(intent)
     }
 
-    private fun onChooseDirectoryResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode != REQUEST_CHOOSE_SAVE_DIRECTORY) {
-            return
-        }
-
+    private fun onChooseDirectoryResult(resultCode: Int, data: Intent) {
         val uri = data.data
         if (resultCode != Activity.RESULT_OK || uri == null) {
             return

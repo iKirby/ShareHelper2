@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -24,6 +25,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val REQUEST_CHOOSE_SAVE_DIRECTORY = 1
         private const val REQUEST_CHOOSE_TEXT_DIRECTORY = 2
     }
+
+    private val openChooseSaveDirectory =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val intent = it.data
+            if (intent != null) {
+                onChooseDirectoryResult(REQUEST_CHOOSE_SAVE_DIRECTORY, it.resultCode, intent)
+            }
+        }
+
+    private val openChooseTextDirectory =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val intent = it.data
+            if (intent != null) {
+                onChooseDirectoryResult(REQUEST_CHOOSE_TEXT_DIRECTORY, it.resultCode, intent)
+            }
+        }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         if (savedInstanceState == null) {
@@ -136,13 +153,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data == null) {
-            return
-        }
-        onChooseDirectoryResult(requestCode, resultCode, data)
-    }
-
     private fun chooseDirectory(requestCode: Int) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -150,7 +160,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             addFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
         }
-        startActivityForResult(intent, requestCode)
+        if (requestCode == REQUEST_CHOOSE_SAVE_DIRECTORY) {
+            openChooseSaveDirectory.launch(intent)
+        } else {
+            openChooseTextDirectory.launch(intent)
+        }
     }
 
     private fun onChooseDirectoryResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -170,7 +184,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             App.prefs.saveDirectory = uri
             findPreference<Preference>(Prefs.PREF_SAVE_DIRECTORY)?.summary =
                 URLDecoder.decode(uri.toString(), StandardCharsets.UTF_8.name())
-        } else if (requestCode == REQUEST_CHOOSE_TEXT_DIRECTORY) {
+        } else {
             App.prefs.textDirectory = uri
             findPreference<Preference>(Prefs.PREF_TEXT_DIRECTORY)?.summary =
                 URLDecoder.decode(uri.toString(), StandardCharsets.UTF_8.name())

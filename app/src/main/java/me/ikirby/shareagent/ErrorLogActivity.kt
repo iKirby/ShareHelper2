@@ -22,7 +22,7 @@ class ErrorLogActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                finish()
                 return true
             }
         }
