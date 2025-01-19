@@ -1,6 +1,5 @@
 package me.ikirby.shareagent
 
-import android.app.Activity
 import android.content.*
 import android.net.Uri
 import android.os.Build
@@ -35,7 +34,7 @@ class ShareActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProvider(this)[ShareActivityViewModel::class.java] }
     private lateinit var binding: ActivityShareBinding
 
-    private var uri: Uri? = null
+    private var uris = mutableListOf<Uri>()
     private val textFileList = mutableListOf<String>()
 
     private val openChooseSaveDirectory =
@@ -52,7 +51,7 @@ class ShareActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         when (intent.action) {
-            Intent.ACTION_SEND -> {
+            Intent.ACTION_SEND, Intent.ACTION_SEND_MULTIPLE -> {
                 if (intent.type == "text/plain") {
                     viewModel.isText.value = true
                     handleText(intent)
@@ -61,10 +60,12 @@ class ShareActivity : AppCompatActivity() {
                     handleFile(intent)
                 }
             }
+
             Intent.ACTION_PROCESS_TEXT -> {
                 viewModel.isText.value = true
                 handleText(intent)
             }
+
             else -> {
                 unsupported()
                 return
@@ -117,7 +118,12 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun handleText(intent: Intent) {
-        var text = intent.getStringExtra(Intent.EXTRA_TEXT)
+        var text = if (intent.action == Intent.ACTION_SEND_MULTIPLE) {
+            intent.getStringArrayListExtra(Intent.EXTRA_TEXT)?.joinToString("\n")
+                ?: intent.getStringArrayExtra(Intent.EXTRA_TEXT)?.joinToString("\n")
+        } else {
+            intent.getStringExtra(Intent.EXTRA_TEXT)
+        }
         if (text == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
         }
@@ -165,23 +171,35 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private fun handleFile(intent: Intent) {
-        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM)
-        }
-        if (uri != null) {
-            val path = uri.path
-            if (path == null) {
-                unsupported()
-                return
+        if (intent.action == Intent.ACTION_SEND_MULTIPLE) {
+            val uriList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM, Uri::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
             }
-            this.uri = uri
-            val fileName = File(path).name
-            viewModel.content.value = fileName
+            if (!uriList.isNullOrEmpty()) {
+                uris.addAll(uriList.filter { it.path != null })
+            }
         } else {
+            val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM)
+            }
+            if (uri?.path != null) {
+                uris.add(uri)
+            }
+        }
+        if (uris.isEmpty()) {
             unsupported()
+        }
+        if (uris.size > 1) {
+            viewModel.content.value = getString(R.string.file_count, uris.size)
+        } else {
+            val fileName = File(uris.first().path!!).name
+            viewModel.content.value = fileName
         }
     }
 
@@ -196,7 +214,7 @@ class ShareActivity : AppCompatActivity() {
     private fun copyText() {
         val text = viewModel.content.value
         if (text != null) {
-            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("ShareHelperCopy", text)
             clipboardManager.setPrimaryClip(clip)
 
@@ -268,25 +286,14 @@ class ShareActivity : AppCompatActivity() {
 
     private fun saveFile() {
         viewModel.processing.value = true
-        if (uri != null) {
+        if (uris.isNotEmpty()) {
             val saveDirectoryUri = App.prefs.saveDirectory
             if (saveDirectoryUri == null) {
                 showToast(R.string.save_directory_not_set)
                 finish()
                 return
             }
-            val file = createFile(
-                this,
-                saveDirectoryUri,
-                getMimeType(contentResolver, uri!!) ?: "application/octet-stream",
-                viewModel.content.value!!
-            )
-            if (file == null) {
-                showToast(R.string.create_file_failed)
-                finish()
-                return
-            }
-            saveOtherFile(uri!!, file)
+            saveOtherFile(uris, saveDirectoryUri)
         } else {
             val saveDirectoryUri = App.prefs.textDirectory ?: App.prefs.saveDirectory
             if (saveDirectoryUri == null) {
@@ -309,26 +316,39 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveOtherFile(fromUri: Uri, targetFile: DocumentFile) {
+    private fun saveOtherFile(fromUris: List<Uri>, saveDirectoryUri: Uri) {
         lifecycleScope.launch {
             runCatching {
-                withContext(Dispatchers.IO) {
-                    val inputStream = contentResolver.openInputStream(fromUri)
-                    if (inputStream != null) {
-                        inputStream.buffered().use { input ->
-                            contentResolver.openOutputStream(targetFile.uri)?.use { output ->
-                                val buffer = ByteArray(1024)
-                                while (true) {
-                                    val length = input.read(buffer)
-                                    if (length > 0) {
-                                        output.write(buffer, 0, length)
-                                    } else {
-                                        break
+                fromUris.forEach {
+                    val file = createFile(
+                        this@ShareActivity,
+                        saveDirectoryUri,
+                        getMimeType(contentResolver, it) ?: "application/octet-stream",
+                        File(it.path!!).name
+                    )
+                    if (file == null) {
+                        showToast(R.string.create_file_failed)
+                        finish()
+                        return@launch
+                    }
+                    withContext(Dispatchers.IO) {
+                        val inputStream = contentResolver.openInputStream(it)
+                        if (inputStream != null) {
+                            inputStream.buffered().use { input ->
+                                contentResolver.openOutputStream(file.uri)?.use { output ->
+                                    val buffer = ByteArray(1024)
+                                    while (true) {
+                                        val length = input.read(buffer)
+                                        if (length > 0) {
+                                            output.write(buffer, 0, length)
+                                        } else {
+                                            break
+                                        }
                                     }
                                 }
                             }
+                            inputStream.close()
                         }
-                        inputStream.close()
                     }
                 }
             }.onSuccess {
@@ -488,7 +508,7 @@ class ShareActivity : AppCompatActivity() {
         }
         try {
             startActivity(intent)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             showToast(R.string.no_available_browsers)
         }
     }
@@ -531,7 +551,7 @@ class ShareActivity : AppCompatActivity() {
 
     private fun onChooseDirectoryResult(resultCode: Int, data: Intent) {
         val uri = data.data
-        if (resultCode != Activity.RESULT_OK || uri == null) {
+        if (resultCode != RESULT_OK || uri == null) {
             return
         }
         val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION

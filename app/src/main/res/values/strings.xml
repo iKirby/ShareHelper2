@@ -28,8 +28,8 @@
     <string name="save_directory_not_set">Save directory is not set. Please set it first to save files</string>
     <string name="error_opening_directory">Open save directory failed. Please try setting the directory again</string>
     <string name="create_file_failed">Create file failed</string>
-    <string name="write_file_failed">Error occurred while writing file</string>
-    <string name="file_saved">File saved</string>
+    <string name="write_file_failed">Error occurred while writing file(s)</string>
+    <string name="file_saved">File(s) saved</string>
     <string name="text_file_saved">Text file saved</string>
     <string name="share_with">Share with…</string>
     <string name="ask_for_text_file_name">Ask for text file name</string>
@@ -72,4 +72,5 @@
     <string name="separate_subject">Separate subject (first line) and content</string>
     <string name="view_play_store">View on Play Store</string>
     <string name="summary_view_play_store">Rate, comment or send feedback on Play Store</string>
+    <string name="file_count">%d files</string>
 </resources>
